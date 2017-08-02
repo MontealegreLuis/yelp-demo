@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Search Businesses in your area!!</title>
+    <link
+        rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/app.css" />
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Business finder</a>
+        </div>
+    </div><!-- /.container-fluid -->
+</nav>
+<main class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <form action="/" class="text-center" method="post">
+                <div class="input-group input-group-lg">
+                    <input
+                        class="form-control"
+                        placeholder="Find businesses near you..."
+                        name="location"
+                    />
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </span>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div th:if="${result != null}" class="row search-result">
+        <div class="col-xs-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    Showing 1-20 of <th:block th:text="${result.total}">1600</th:block>
+                </div>
+                <div class="list-group">
+                    <div class=" list-group-item" th:each="business: ${result.businesses}">
+                        <div class="media">
+                            <div class="media-left">
+                                <a href="#">
+                                    <img
+                                        class="media-object business-img"
+                                        th:src="${business.image}"
+                                        th:alt="${business.name}"
+                                    />
+                                </a>
+                            </div>
+                            <div class="media-body">
+                                <h4 class="media-heading" th:text="${business.name}">Media heading</h4>
+                                ...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<script
+    src="http://code.jquery.com/jquery-3.2.1.min.js"
+    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous"
+>
+</script>
+<script
+    src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous"
+></script>
+</body>
+</html>
