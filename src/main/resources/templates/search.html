@@ -52,23 +52,40 @@
                 <div class="panel-heading">
                     Showing 1-20 of <th:block th:text="${result.total}">1600</th:block>
                 </div>
-                <div class="list-group">
-                    <div class=" list-group-item" th:each="business: ${result.businesses}">
-                        <div class="media">
-                            <div class="media-left">
-                                <a href="#">
-                                    <img
-                                        class="media-object business-img"
-                                        th:src="${business.image}"
-                                        th:alt="${business.name}"
-                                    />
-                                </a>
-                            </div>
-                            <div class="media-body">
-                                <h4 class="media-heading" th:text="${business.name}">Media heading</h4>
-                                ...
-                            </div>
-                        </div>
+                <div class="row business" th:each="business: ${result.businesses}">
+                    <div class="col-xs-2 text-center">
+                        <a th:href="${business.url}">
+                            <img
+                                class="img-responsive img-rounded business-img"
+                                th:src="${business.image}"
+                                th:alt="${business.name}"
+                            />
+                        </a>
+                    </div>
+                    <div class="col-xs-5">
+                        <h4 th:text="${business.name}">
+                            Media heading
+                        </h4>
+                        <p>
+                            <span th:text="${business.rating}">5</span> stars,
+                            <span th:text="${business.reviewCount}">100</span> reviews
+                        </p>
+                        <p>
+                            <span th:text="${business.pricingLevel.toString()}">$</span>
+                            <th:block th:each="category,status: ${business.categories}">
+                                <th:block th:text="${category.title}">Category</th:block>
+                                <th:block th:if="${!status.last}">,</th:block>
+                            </th:block>
+                        </p>
+                    </div>
+                    <div class="col-xs-5">
+                        <p class="business-location">
+                            <th:block th:each="line,status : ${business.location.displayAddress}">
+                                <th:block th:text="${line}">line</th:block>
+                                <th:block th:if="${!status.last}"><br/></th:block>
+                            </th:block>
+                        </p>
+                        <p th:text="${business.phone}">1234567890</p>
                     </div>
                 </div>
             </div>
