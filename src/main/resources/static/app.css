@@ -12,8 +12,23 @@
     margin: 3px;
     border-bottom: 1px #aaa solid;
     border-collapse: collapse;
+    padding-bottom: 10px;
 }
 
-.business-location {
-    margin-top: 10px;
+.business:last-child {
+    border-style: none;
+    padding-bottom: 0;
+}
+
+.business-location,
+.business-transaction {
+    margin-top: 8px;
+}
+
+.transactions {
+    list-style-type: none;
+}
+
+.transactions > li {
+    margin-bottom: .5em;
 }

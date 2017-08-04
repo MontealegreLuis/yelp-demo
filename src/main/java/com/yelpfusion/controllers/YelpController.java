@@ -28,7 +28,7 @@ public class YelpController {
         return "search";
     }
 
-    @PostMapping("/")
+    @GetMapping("/search")
     public String showSearchResults(@ModelAttribute SearchRequest request, Model viewModel) {
         viewModel.addAttribute("result", yelp.search(request.criteria()).searchResult());
         return "search";
