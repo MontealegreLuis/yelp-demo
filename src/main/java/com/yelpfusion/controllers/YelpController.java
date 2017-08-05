@@ -4,7 +4,9 @@
 package com.yelpfusion.controllers;
 
 import com.montealegreluis.yelpv3.Yelp;
+import com.montealegreluis.yelpv3.businesses.SearchResult;
 import com.montealegreluis.yelpv3.client.Credentials;
+import com.montealegreluis.yelpv3.search.SearchCriteria;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,7 +32,11 @@ public class YelpController {
 
     @GetMapping("/search")
     public String showSearchResults(@ModelAttribute SearchRequest request, Model viewModel) {
-        viewModel.addAttribute("result", yelp.search(request.criteria()).searchResult());
+        SearchCriteria criteria = request.criteria();
+        SearchResult result = yelp.search(criteria).searchResult();
+        viewModel.addAttribute("result", result);
+        viewModel.addAttribute("criteria", criteria);
+        viewModel.addAttribute("pagination", criteria.pagination(result.total));
         return "search";
     }
 }
