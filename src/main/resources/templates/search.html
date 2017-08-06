@@ -62,7 +62,13 @@
                             Media heading
                         </h4>
                         <p>
-                            <span th:text="${business.rating}">5</span> stars,
+                            <span class="rating" th:title="${business.rating + ' stars'}">
+                                <span
+                                    class="fa"
+                                    th:each="i : ${#numbers.sequence(0, 4)}"
+                                    th:classappend="${business.rating - i >= 1 ? 'fa-star' : (business.rating - i > 0 ? 'fa-star-half-o' : 'fa-star-o')}">
+                                </span>
+                            </span>
                             <span th:text="${business.reviewCount}">100</span> reviews
                         </p>
                         <p>

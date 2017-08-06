@@ -2,6 +2,10 @@
     margin-top: 1.5em;
 }
 
+.rating {
+    color: #ffa500;
+}
+
 .business-img {
     max-height: 100px;
     max-width: 100px;
