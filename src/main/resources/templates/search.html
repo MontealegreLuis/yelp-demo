@@ -72,7 +72,13 @@
                             <span th:text="${business.reviewCount}">100</span> reviews
                         </p>
                         <p>
-                            <span th:text="${business.pricingLevel.toString()}">$</span>
+                            <span
+                                class="label label-success"
+                                th:title="${business.pricingLevel.label + ' (' + business.pricingLevel.description + ')' }"
+                                th:text="${business.pricingLevel.toString()}"
+                            >
+                                $
+                            </span>
                             <th:block th:each="category,status: ${business.categories}">
                                 <th:block th:text="${category.title}">Category</th:block>
                                 <th:block th:if="${!status.last}">,</th:block>
