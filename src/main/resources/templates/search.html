@@ -30,9 +30,16 @@
         <div class="col-xs-12">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    Showing 1-<th:block th:text="${result.businesses.size()}">5</th:block>
+                    Showing
+                    <th:block th:text="${criteria.offset() + 1}">1</th:block>
+                    -
+                    <th:block th:text="${criteria.offset() + result.businesses.size()}">
+                        5
+                    </th:block>
                     of
-                    <th:block th:text="${result.total}">1600</th:block>
+                    <th:block th:text="${#numbers.formatInteger(result.total, 0, 'COMMA')}">
+                        1600
+                    </th:block>
                     <th:block th:if="${pagination.exceedsAPILimit()}">
                         (Only <span th:text="${pagination.last()}">5</span> pages available)
                     </th:block>
@@ -93,11 +100,11 @@
                 </div>
                 <div
                     class="panel-footer text-center"
-                    th:with="limit=${pagination.currentPage() + 4}"
+                    th:with="limit=${pagination.last() - pagination.currentPage() > 4 ? pagination.currentPage() + 4 : pagination.last()}"
                     th:if="${pagination.hasPages()}"
                 >
                     <ul class="pagination">
-                        <li th:if="${1 != pagination.currentPage()}">
+                        <li th:if="${!pagination.isFirst()}">
                             <a
                                 th:href="${criteria.queryStringForPage(pagination.first())}"
                                 aria-label="First page"
@@ -136,7 +143,7 @@
                                 <span>&gt;</span>
                             </a>
                         </li>
-                        <li th:if="${pagination.last() != pagination.currentPage()}">
+                        <li th:if="${!pagination.isLast()}">
                             <a
                                 th:href="${criteria.queryStringForPage(pagination.last())}"
                                 aria-label="Last page"
