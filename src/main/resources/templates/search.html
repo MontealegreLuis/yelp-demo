@@ -53,7 +53,12 @@
                     Showing 1-<th:block th:text="${result.businesses.size()}">5</th:block>
                     of
                     <th:block th:text="${result.total}">1600</th:block>
-                    (<span th:text="${pagination.last()}">5</span> pages)
+                    <th:block th:if="${pagination.exceedsAPILimit()}">
+                        (Only <span th:text="${pagination.last()}">5</span> pages available)
+                    </th:block>
+                    <th:block th:if="${!pagination.exceedsAPILimit()}">
+                        (<span th:text="${pagination.last()}">5</span> pages)
+                    </th:block>
                 </div>
                 <div class="row business" th:each="business: ${result.businesses}">
                     <div class="col-xs-2 text-center">
@@ -106,36 +111,56 @@
                         </ul>
                     </div>
                 </div>
-                <div class="panel-footer text-center" th:if="${pagination.hasPages()}">
+                <div
+                    class="panel-footer text-center"
+                    th:with="limit=${pagination.currentPage() + 4}"
+                    th:if="${pagination.hasPages()}"
+                >
                     <ul class="pagination">
-                        <li>
+                        <li th:if="${1 != pagination.currentPage()}">
                             <a
                                 th:href="${criteria.queryStringForPage(pagination.first())}"
-                                aria-label="First"
+                                aria-label="First page"
+                                title="First page"
                             >
-                                <span aria-hidden="true">&laquo;</span>
+                                <span>&laquo;</span>
                             </a>
                         </li>
                         <li th:if="${pagination.hasPrevious()}">
                             <a
                                 th:href="${criteria.queryStringForPage(pagination.previous())}"
-                                aria-label="Previous"
+                                aria-label="Previous page"
+                                title="Previous page"
                             >
-                                <span aria-hidden="true">&lt;</span>
+                                <span>&lt;</span>
+                            </a>
+                        </li>
+                        <li
+                            th:classappend="${i == pagination.currentPage()} ? 'active' : ''"
+                            th:each="i : ${#numbers.sequence(pagination.currentPage(), limit/1)}"
+                        >
+                            <a
+                                th:href="${criteria.queryStringForPage(i)}"
+                                th:aria-label="${'Page ' + i}"
+                                th:title="${'Page ' + i}"
+                            >
+                                <span th:text="${i}">1</span>
                             </a>
                         </li>
                         <li th:if="${pagination.hasNext()}">
                             <a
                                 th:href="${criteria.queryStringForPage(pagination.next())}"
                                 aria-label="Next"
+                                title="Next"
                             >
                                 <span>&gt;</span>
                             </a>
                         </li>
-                        <li>
+                        <li th:if="${pagination.last() != pagination.currentPage()}">
                             <a
                                 th:href="${criteria.queryStringForPage(pagination.last())}"
-                                aria-label="Last"
+                                aria-label="Last page"
+                                title="Last page"
                             >
                                 <span>&raquo;</span>
                             </a>
