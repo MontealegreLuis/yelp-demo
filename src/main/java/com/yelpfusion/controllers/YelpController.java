@@ -20,22 +20,22 @@ import java.util.Locale;
 @Controller
 public class YelpController {
     private final Yelp yelp;
+    private SearchCategories categories;
 
     public YelpController(
         @Value("${yelp.api.client_id}") String yelpId,
         @Value("${yelp.api.client_secret}") String yelpSecret
     ) {
         yelp = new Yelp(new Credentials(yelpId, yelpSecret));
+        categories = SearchCategoryParser.all()
+            .main()
+            .availableAt(new Locale("en", "US"))
+        ;
     }
 
     @GetMapping("/")
     public String showSearchForm(Model viewModel) {
-        SearchCategories usCategories = SearchCategoryParser.all()
-            .main()
-            .availableAt(new Locale("en", "US"))
-        ;
-
-        viewModel.addAttribute("categories", usCategories);
+        viewModel.addAttribute("categories", categories);
         return "search";
     }
 
@@ -43,6 +43,7 @@ public class YelpController {
     public String showSearchResults(@ModelAttribute SearchRequest request, Model viewModel) {
         SearchCriteria criteria = request.criteria();
         SearchResult result = yelp.search(criteria).searchResult();
+        viewModel.addAttribute("categories", categories);
         viewModel.addAttribute("result", result);
         viewModel.addAttribute("criteria", criteria);
         viewModel.addAttribute("pagination", criteria.pagination(result.total));

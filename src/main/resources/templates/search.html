@@ -11,36 +11,20 @@
     <div class="row">
         <div class="col-xs-12">
             <form action="/search" class="text-center">
-                <div class="btn-group pull-left">
-                    <div class="dropdown">
-                        <button
-                            class="btn btn-default btn-lg dropdown-toggle"
-                            type="button"
-                            id="category"
-                            data-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="true"
-                        >
-                            Find
-                            <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="category">
-                            <li th:each="category: ${categories}">
-                                <a
-                                    href="#"
-                                    th:attr="data-alias=${category.alias}"
-                                    th:text="${category.title}"
-                                >
-                                    Category
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+                <select class="form-control category input-lg" name="categories">
+                    <option
+                        th:value="${category.alias}"
+                        th:text="${category.title}"
+                        th:selected="${category.alias == 'restaurants'}"
+                        th:each="category: ${categories}"
+                    >
+                        Category
+                    </option>
+                </select>
                 <div class="input-group input-group-lg">
                     <input
                         class="form-control"
-                        placeholder="Find businesses near you..."
+                        placeholder="Near you..."
                         name="location"
                     />
                     <span class="input-group-btn">

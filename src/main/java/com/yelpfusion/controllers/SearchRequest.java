@@ -9,6 +9,7 @@ public class SearchRequest {
     private static final int PAGE_SIZE = 5;
     private String location;
     private Integer offset;
+    private String categories;
 
     public SearchRequest() {
     }
@@ -16,6 +17,7 @@ public class SearchRequest {
     public SearchCriteria criteria() {
         SearchCriteria criteria = SearchCriteria.byLocation(location).limit(PAGE_SIZE);
         if (offset != null) criteria.offset(offset);
+        if (!"".equals(categories)) criteria.inCategories(categories);
 
         return criteria;
     }
@@ -34,5 +36,13 @@ public class SearchRequest {
 
     public void setOffset(Integer offset) {
         this.offset = offset;
+    }
+
+    public String getCategories() {
+        return categories;
+    }
+
+    public void setCategories(String categories) {
+        this.categories = categories;
     }
 }

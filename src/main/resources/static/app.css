@@ -36,3 +36,8 @@
 .transactions > li {
     margin-bottom: .5em;
 }
+
+.category {
+    float: left;
+    width: auto;
+}
