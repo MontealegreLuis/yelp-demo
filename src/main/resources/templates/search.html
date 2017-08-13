@@ -90,8 +90,12 @@
                                 $
                             </span>
                             <th:block th:each="category,status: ${business.categories}">
-                                <th:block th:text="${category.title}">Category</th:block>
-                                <th:block th:if="${!status.last}">,</th:block>
+                                <a
+                                    th:href="${criteria.inCategory(category.alias).queryStringForPage(1)}"
+                                    th:text="${status.last ? category.title : category.title + ','}"
+                                >
+                                    Category
+                                </a>
                             </th:block>
                         </p>
                     </div>
