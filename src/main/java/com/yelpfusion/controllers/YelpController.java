@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Locale;
 
@@ -48,5 +49,11 @@ public class YelpController {
         viewModel.addAttribute("criteria", criteria);
         viewModel.addAttribute("pagination", criteria.pagination(result.total));
         return "search";
+    }
+
+    @GetMapping("/business/{businessId}")
+    public String viewBusiness(@PathVariable String businessId, Model viewModel) {
+        viewModel.addAttribute("business", yelp.searchById(businessId).business());
+        return "business";
     }
 }

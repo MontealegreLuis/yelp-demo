@@ -3,7 +3,8 @@
  */
 package com.yelpfusion.controllers;
 
-import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.montealegreluis.yelpv3.Yelp;
 import com.montealegreluis.yelpv3.client.Credentials;
@@ -56,7 +57,7 @@ public class BusinessesController {
         );
     }
 
-    @GetMapping(value = "/business/{yelpId}", produces = "application/json")
+    @GetMapping(value = "/business/{yelpId}.json", produces = "application/json")
     @ResponseBody
     public String showBusiness(@PathVariable String yelpId) throws IOException {
         return writer.writeValueAsString(yelp.searchById(yelpId).business());

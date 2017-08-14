@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title th:text="${business.basicInformation.name}">Business details</title>
+    <th:block th:replace="fragments/common :: styles">Stylesheets</th:block>
+</head>
+<body>
+<nav th:replace="fragments/common :: main_nav">Main navigation</nav>
+<main class="container">
+    <header>
+        <h1 th:text="${business.basicInformation.name}">Business</h1>
+        <h4>
+            <small class="text-primary" th:if="${business.details.isClaimed}">
+                <span class="glyphicon glyphicon-ok-sign"></span> Claimed
+            </small>
+        </h4>
+        <p th:replace="fragments/business :: rating(${business.basicInformation})"></p>
+    </header>
+</main>
+<th:block th:replace="fragments/common :: scripts">Scripts</th:block>
+</body>
+</html>
