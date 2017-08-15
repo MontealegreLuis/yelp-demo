@@ -15,7 +15,7 @@
     </span>
     <span th:text="${business.reviewCount}">100</span> reviews
 </p>
-<p th:fragment="priceCategories(business)">
+<p th:fragment="priceCategories(business, criteria)">
     <span
         class="label label-success"
         th:title="${business.pricingLevel.label + ' (' + business.pricingLevel.description + ')' }"
@@ -25,7 +25,7 @@
     </span>
     <th:block th:each="category,status: ${business.categories}">
         <a
-            th:href="${criteria.inCategory(category.alias).queryStringForPage(1)}"
+            th:href="${'/search' + criteria.inCategory(category.alias).queryStringForPage(1)}"
             th:text="${status.last ? category.title : category.title + ','}"
         >
             Category

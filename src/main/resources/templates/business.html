@@ -16,6 +16,7 @@
             </small>
         </h4>
         <p th:replace="fragments/business :: rating(${business.basicInformation})"></p>
+        <p th:replace="fragments/business :: priceCategories(business=${business.basicInformation}, criteria=${criteria})"></p>
     </header>
 </main>
 <th:block th:replace="fragments/common :: scripts">Scripts</th:block>

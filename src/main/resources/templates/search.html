@@ -77,7 +77,7 @@
                             </a>
                         </h4>
                         <p th:replace="fragments/business :: rating(${business})"></p>
-                        <p th:replace="fragments/business :: priceCategories(${business})"></p>
+                        <p th:replace="fragments/business :: priceCategories(business=${business}, criteria=${criteria})"></p>
                     </div>
                     <div class="col-xs-4">
                         <p class="business-location">

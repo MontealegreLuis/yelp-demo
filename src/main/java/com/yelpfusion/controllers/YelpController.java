@@ -4,6 +4,7 @@
 package com.yelpfusion.controllers;
 
 import com.montealegreluis.yelpv3.Yelp;
+import com.montealegreluis.yelpv3.businesses.Business;
 import com.montealegreluis.yelpv3.businesses.SearchResult;
 import com.montealegreluis.yelpv3.client.Credentials;
 import com.montealegreluis.yelpv3.jsonparser.SearchCategoryParser;
@@ -53,7 +54,10 @@ public class YelpController {
 
     @GetMapping("/business/{businessId}")
     public String viewBusiness(@PathVariable String businessId, Model viewModel) {
-        viewModel.addAttribute("business", yelp.searchById(businessId).business());
+        Business business = yelp.searchById(businessId).business();
+        SearchCriteria criteria = SearchCriteria.byLocation(business.basicInformation.location.city);
+        viewModel.addAttribute("business", business);
+        viewModel.addAttribute("criteria", criteria);
         return "business";
     }
 }
