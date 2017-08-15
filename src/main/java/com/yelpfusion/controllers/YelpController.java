@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.time.LocalDate;
 import java.util.Locale;
 
 @Controller
@@ -56,8 +57,10 @@ public class YelpController {
     public String viewBusiness(@PathVariable String businessId, Model viewModel) {
         Business business = yelp.searchById(businessId).business();
         SearchCriteria criteria = SearchCriteria.byLocation(business.basicInformation.location.city);
+
         viewModel.addAttribute("business", business);
         viewModel.addAttribute("criteria", criteria);
+        viewModel.addAttribute("today", LocalDate.now().getDayOfWeek());
         return "business";
     }
 }

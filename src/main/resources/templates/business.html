@@ -32,8 +32,72 @@
                 <img
                     th:src="${photo}"
                     th:alt="${business.basicInformation.name}"
-                    class="img-responsive img-thumbnail"
+                    class="img-responsive img-thumbnail business-photo center-block"
                 />
+            </div>
+        </div>
+    </section>
+    <section class="row business-details">
+        <div class="col-xs-8"></div>
+        <div class="col-xs-4">
+            <div class="panel panel-default hours">
+                <div class="panel-heading">
+                    <div class="media">
+                        <div class="media-left text-primary">
+                            <span class="glyphicon glyphicon-time"></span>
+                        </div>
+                        <div class="media-body">
+                            <ul class="today-business-hours">
+                                <li th:if="${business.details.schedule.isOpenNow}">
+                                    Today <strong class="text-success">Open now</strong>
+                                </li>
+                                <li th:if="${!business.details.schedule.isOpenNow}">
+                                    Today <strong class="text-danger">Closed now</strong>
+                                </li>
+                                <li th:each="hours : ${business.details.schedule.hoursFor(today)}">
+                                    <strong th:text="${hours.start.toString() + ' - ' + hours.end.toString()}"></strong>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="media">
+                        <div class="media-left">
+                            <strong
+                                class="text-success"
+                                th:title="${business.basicInformation.pricingLevel.label}"
+                                th:text="${business.basicInformation.pricingLevel.toString()}"
+                            >
+                                $
+                            </strong>
+                        </div>
+                        <div class="media-body">
+                            <p>
+                                Price range
+                                <strong th:text="${business.basicInformation.pricingLevel.description}"></strong>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <h3 class="text-primary">Hours</h3>
+                    <div class="media" th:each="hours : ${business.details.schedule.hours}">
+                        <div class="media-left">
+                            <strong
+                                th:text="${hours.day.getDisplayName(T(java.time.format.TextStyle).SHORT, T(java.util.Locale).US)}"
+                                class="hours-day"
+                            ></strong>
+                        </div>
+                        <div class="media-body">
+                            <span th:text="${hours.start.toString() + ' - ' + hours.end.toString()}"></span>
+                            <span th:if="${today.equals(hours.day) and business.details.schedule.isOpenNow}">
+                                <strong class="text-success">Open now</strong>
+                            </span>
+                            <span th:if="${today.equals(hours.day) and !business.details.schedule.isOpenNow}">
+                                <strong class="text-danger">Closed now</strong>
+                            </span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>

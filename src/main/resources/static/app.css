@@ -27,8 +27,22 @@
 .business-location,
 .business-transaction,
 .business-summary,
-.business-photos {
+.business-photos,
+.business-details {
     margin-top: 8px;
+}
+
+.business-photo {
+    max-height: 200px;
+}
+
+.today-business-hours {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.hours-day {
+    font-family: "Lucida Console", Monaco, monospace;
 }
 
 .transactions {
