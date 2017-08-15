@@ -19,8 +19,13 @@
         <p th:replace="fragments/business :: priceCategories(business=${business.basicInformation}, criteria=${criteria})"></p>
     </header>
     <main>
-        <div class="col-xs-4">
-
+        <div class="col-xs-4 business-summary">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div th:replace="fragments/business :: location(${business.basicInformation})"></div>
+                    <div th:replace="fragments/business :: phone(${business.basicInformation})"></div>
+                </div>
+            </div>
         </div>
         <div class="col-xs-8"></div>
     </main>

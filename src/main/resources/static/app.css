@@ -25,7 +25,8 @@
 }
 
 .business-location,
-.business-transaction {
+.business-transaction,
+.business-summary {
     margin-top: 8px;
 }
 
