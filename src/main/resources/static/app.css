@@ -6,17 +6,17 @@
     color: #ffa500;
 }
 
-.business-img {
-    max-height: 100px;
-    max-width: 100px;
-    margin-top: 10px;
-}
-
 .business {
     margin: 3px;
     border-bottom: 1px #aaa solid;
     border-collapse: collapse;
     padding-bottom: 10px;
+}
+
+.business-img {
+    max-height: 100px;
+    max-width: 100px;
+    margin-top: 10px;
 }
 
 .business:nth-child(6) {
@@ -30,6 +30,10 @@
 .business-photos,
 .business-details {
     margin-top: 8px;
+}
+
+.business-hours {
+    padding-top: 2px;
 }
 
 .business-photo {

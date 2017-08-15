@@ -80,21 +80,23 @@
                 </div>
                 <div class="panel-body">
                     <h3 class="text-primary">Hours</h3>
-                    <div class="media" th:each="hours : ${business.details.schedule.hours}">
+                    <div class="media" th:each="entry : ${business.details.schedule.hours}">
                         <div class="media-left">
                             <strong
-                                th:text="${hours.day.getDisplayName(T(java.time.format.TextStyle).SHORT, T(java.util.Locale).US)}"
+                                th:text="${entry.key.getDisplayName(T(java.time.format.TextStyle).SHORT, T(java.util.Locale).US)}"
                                 class="hours-day"
                             ></strong>
                         </div>
-                        <div class="media-body">
-                            <span th:text="${hours.start.toString() + ' - ' + hours.end.toString()}"></span>
-                            <span th:if="${today.equals(hours.day) and business.details.schedule.isOpenNow}">
+                        <div class="media-body business-hours">
+                            <p th:each="hours : ${entry.value}">
+                                <span th:text="${hours.start.toString() + ' - ' + hours.end.toString() + ' hrs.'}"></span>
+                                <span th:if="${today.equals(hours.day) and business.details.schedule.isOpenNow}">
                                 <strong class="text-success">Open now</strong>
-                            </span>
-                            <span th:if="${today.equals(hours.day) and !business.details.schedule.isOpenNow}">
-                                <strong class="text-danger">Closed now</strong>
-                            </span>
+                                </span>
+                                    <span th:if="${today.equals(hours.day) and !business.details.schedule.isOpenNow}">
+                                    <strong class="text-danger">Closed now</strong>
+                                </span>
+                            </p>
                         </div>
                     </div>
                 </div>
