@@ -18,7 +18,7 @@
         <p th:replace="fragments/business :: rating(${business.basicInformation})"></p>
         <p th:replace="fragments/business :: priceCategories(business=${business.basicInformation}, criteria=${criteria})"></p>
     </header>
-    <main>
+    <section class="row business-header">
         <div class="col-xs-4 business-summary">
             <div class="panel panel-default">
                 <div class="panel-body">
@@ -27,8 +27,16 @@
                 </div>
             </div>
         </div>
-        <div class="col-xs-8"></div>
-    </main>
+        <div class="col-xs-8 business-photos">
+            <div class="col-xs-4" th:each="photo : ${business.details.photos}">
+                <img
+                    th:src="${photo}"
+                    th:alt="${business.basicInformation.name}"
+                    class="img-responsive img-thumbnail"
+                />
+            </div>
+        </div>
+    </section>
 </div>
 <th:block th:replace="fragments/common :: scripts">Scripts</th:block>
 </body>
