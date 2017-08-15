@@ -32,5 +32,24 @@
         </a>
     </th:block>
 </p>
+<div th:fragment="location(business)" class="media business-location">
+    <div class="media-left text-muted">
+        <span class="glyphicon glyphicon-map-marker"></span>
+    </div>
+    <div class="media-body">
+        <th:block th:each="line,status : ${business.location.displayAddress}">
+            <th:block th:text="${line}">line</th:block>
+            <th:block th:if="${!status.last}"><br/></th:block>
+        </th:block>
+    </div>
+</div>
+<div th:fragment="phone(business)" class="media">
+    <div class="media-left text-muted">
+        <span class="glyphicon glyphicon-earphone"></span>
+    </div>
+    <div class="media-body">
+        <p th:text="${business.phone}">1234567890</p>
+    </div>
+</div>
 </body>
 </html>

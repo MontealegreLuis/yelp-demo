@@ -7,7 +7,7 @@
 </head>
 <body>
 <nav th:replace="fragments/common :: main_nav">Main navigation</nav>
-<main class="container">
+<div class="container">
     <header>
         <h1 th:text="${business.basicInformation.name}">Business</h1>
         <h4>
@@ -18,7 +18,13 @@
         <p th:replace="fragments/business :: rating(${business.basicInformation})"></p>
         <p th:replace="fragments/business :: priceCategories(business=${business.basicInformation}, criteria=${criteria})"></p>
     </header>
-</main>
+    <main>
+        <div class="col-xs-4">
+
+        </div>
+        <div class="col-xs-8"></div>
+    </main>
+</div>
 <th:block th:replace="fragments/common :: scripts">Scripts</th:block>
 </body>
 </html>
