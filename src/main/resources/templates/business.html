@@ -38,7 +38,36 @@
         </div>
     </section>
     <section class="row business-details">
-        <div class="col-xs-8"></div>
+        <div class="col-xs-8">
+            <div class="media" th:each="review : ${reviews}">
+                <div class="media-left">
+                    <img
+                        class="business-reviewer"
+                        th:src="${review.user.image}"
+                        th:alt="${review.user.name}"
+                    />
+                </div>
+                <div class="media-body">
+                    <p>
+                        <span th:replace="fragments/business :: stars(${review.rating})"></span>
+                        <small
+                            class="text-muted"
+                            th:text="${format.format(review.createdAt)}"
+                        >
+                        </small>
+                    </p>
+                    <p>
+                        "<th:block th:text="${review.text}"></th:block>"
+                        <a th:href="${review.url}" target="_blank" rel="noopener">
+                            <small class="text-muted">
+                                <th:block th:text="${review.user.name}"></th:block>
+                                <span class="glyphicon glyphicon-new-window"></span>
+                            </small>
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
         <div class="col-xs-4">
             <div class="panel panel-default hours">
                 <div class="panel-heading">

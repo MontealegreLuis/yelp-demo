@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Locale;
 
@@ -59,8 +60,11 @@ public class YelpController {
         SearchCriteria criteria = SearchCriteria.byLocation(business.basicInformation.location.city);
 
         viewModel.addAttribute("business", business);
+        viewModel.addAttribute("reviews", yelp.reviews(businessId).reviews());
         viewModel.addAttribute("criteria", criteria);
         viewModel.addAttribute("today", LocalDate.now().getDayOfWeek());
+        viewModel.addAttribute("format", new SimpleDateFormat("MM/dd/yyyy HH:mm:ss"));
+
         return "business";
     }
 }

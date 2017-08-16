@@ -6,15 +6,19 @@
 </head>
 <body>
 <p th:fragment="rating(business)">
-    <span class="rating" th:title="${business.rating + ' stars'}">
+    <span th:replace="fragments/business :: stars(${business.rating})"></span>
+    <span th:text="${business.reviewCount}">100</span> reviews
+</p>
+<span th:fragment="stars(rating)" class="rating" th:title="${rating + ' stars'}">
+    <span class="rating" th:title="${rating + ' stars'}">
         <span
             class="fa"
             th:each="i : ${#numbers.sequence(0, 4)}"
-            th:classappend="${business.rating - i >= 1 ? 'fa-star' : (business.rating - i > 0 ? 'fa-star-half-o' : 'fa-star-o')}">
+            th:classappend="${rating - i >= 1 ? 'fa-star' : (rating - i > 0 ? 'fa-star-half-o' : 'fa-star-o')}"
+        >
         </span>
     </span>
-    <span th:text="${business.reviewCount}">100</span> reviews
-</p>
+</span>
 <p th:fragment="priceCategories(business, criteria)">
     <span
         class="label label-success"

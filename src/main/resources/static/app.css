@@ -40,6 +40,10 @@
     max-height: 200px;
 }
 
+.business-reviewer {
+    max-width: 64px;
+}
+
 .today-business-hours {
     list-style-type: none;
     padding-left: 0;
