@@ -14,6 +14,13 @@
             <small class="text-primary" th:if="${business.details.isClaimed}">
                 <span class="glyphicon glyphicon-ok-sign"></span> Claimed
             </small>
+            <small
+                class="text-success"
+                th:each="transaction: ${business.basicInformation.transactions}"
+            >
+                <span class="glyphicon glyphicon-ok-circle"></span>
+                <th:block th:text="${transaction.label}"></th:block>
+            </small>
         </h4>
         <p th:replace="fragments/business :: rating(${business.basicInformation})"></p>
         <p th:replace="fragments/business :: priceCategories(business=${business.basicInformation}, criteria=${criteria})"></p>
@@ -68,7 +75,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xs-3">
+        <aside class="col-xs-3">
             <div class="panel panel-default hours">
                 <div class="panel-heading">
                     <div class="media">
@@ -136,19 +143,7 @@
                     </div>
                 </div>
             </div>
-            <div
-                class="panel panel-default"
-                th:if="${!business.basicInformation.transactions.isEmpty()}"
-            >
-                <div class="panel-body">
-                    <h3 class="text-primary">More info</h3>
-                    <p th:each="transaction: ${business.basicInformation.transactions}">
-                        <span class="text-success glyphicon glyphicon-ok-circle"></span>
-                        <th:block th:text="${transaction.label}"></th:block>
-                    </p>
-                </div>
-            </div>
-        </div>
+        </aside>
     </section>
 </div>
 <th:block th:replace="fragments/common :: scripts">Scripts</th:block>
