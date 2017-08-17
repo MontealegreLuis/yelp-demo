@@ -5,6 +5,14 @@
     <title>Business fragments</title>
 </head>
 <body>
+<small
+    th:fragment="transactions(business)"
+    class="text-success"
+    th:each="transaction: ${business.transactions}"
+>
+    <span class="glyphicon glyphicon-ok-circle"></span>
+    <th:block th:text="${transaction.label}"></th:block>
+</small>
 <p th:fragment="rating(business)">
     <span th:replace="fragments/business :: stars(${business.rating})"></span>
     <span th:text="${business.reviewCount}">100</span> reviews

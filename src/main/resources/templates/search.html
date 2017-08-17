@@ -75,6 +75,8 @@
                             >
                                 Media heading
                             </a>
+                            <small th:replace="fragments/business :: transactions(${business})">
+                            </small>
                         </h4>
                         <p th:replace="fragments/business :: rating(${business})"></p>
                         <p th:replace="fragments/business :: priceCategories(business=${business}, criteria=${criteria})"></p>

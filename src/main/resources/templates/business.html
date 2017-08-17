@@ -14,12 +14,7 @@
             <small class="text-primary" th:if="${business.details.isClaimed}">
                 <span class="glyphicon glyphicon-ok-sign"></span> Claimed
             </small>
-            <small
-                class="text-success"
-                th:each="transaction: ${business.basicInformation.transactions}"
-            >
-                <span class="glyphicon glyphicon-ok-circle"></span>
-                <th:block th:text="${transaction.label}"></th:block>
+            <small th:replace="fragments/business :: transactions(${business.basicInformation})">
             </small>
         </h4>
         <p th:replace="fragments/business :: rating(${business.basicInformation})"></p>
