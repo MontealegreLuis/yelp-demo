@@ -8,65 +8,82 @@
 <body>
 <nav th:replace="fragments/common :: main_nav">Main navigation</nav>
 <div class="container">
-    <header>
-        <h1 th:text="${business.basicInformation.name}">Business</h1>
-        <h4>
-            <small class="text-primary" th:if="${business.details.isClaimed}">
-                <span class="glyphicon glyphicon-ok-sign"></span> Claimed
-            </small>
-            <small th:replace="fragments/business :: transactions(${business.basicInformation})">
-            </small>
-        </h4>
-        <p th:replace="fragments/business :: rating(${business.basicInformation})"></p>
-        <p th:replace="fragments/business :: priceCategories(business=${business.basicInformation}, criteria=${criteria})"></p>
-    </header>
-    <section class="row business-header">
-        <div class="col-xs-4 business-summary">
+    <header class="row">
+        <div class="col-xs-12">
+            <h1 th:text="${business.basicInformation.name}">Business</h1>
+        </div>
+        <div class="col-xs-9 business-details">
+            <h4>
+                <small class="text-primary" th:if="${business.details.isClaimed}">
+                    <span class="glyphicon glyphicon-ok-sign"></span> Claimed
+                </small>
+                <small
+                    th:replace="fragments/business :: transactions(${business.basicInformation})">
+                </small>
+            </h4>
+            <p th:replace="fragments/business :: rating(${business.basicInformation})"></p>
+            <p th:replace="fragments/business :: priceCategories(business=${business.basicInformation}, criteria=${criteria})"></p>
+        </div>
+        <div class="col-xs-3 business-summary">
             <div class="panel panel-default">
-                <div class="panel-body">
-                    <div th:replace="fragments/business :: location(${business.basicInformation})"></div>
-                    <div th:replace="fragments/business :: phone(${business.basicInformation})"></div>
+                <div class="panel-heading">
+                    <div
+                        th:replace="fragments/business :: location(${business.basicInformation})"
+                    >
+                    </div>
+                    <div
+                        th:replace="fragments/business :: phone(${business.basicInformation})"
+                    >
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-xs-8 business-photos">
-            <div class="col-xs-4" th:each="photo : ${business.details.photos}">
-                <img
-                    th:src="${photo}"
-                    th:alt="${business.basicInformation.name}"
-                    class="img-responsive img-thumbnail business-photo center-block"
-                />
-            </div>
-        </div>
+    </header>
+    <section class="row business-header">
+
     </section>
     <section class="row business-details">
         <div class="col-xs-9">
-            <div class="media" th:each="review : ${reviews}">
-                <div class="media-left">
+            <div class="col-xs-12">
+                <div class="col-xs-4" th:each="photo : ${business.details.photos}">
                     <img
-                        class="business-reviewer"
-                        th:src="${review.user.image}"
-                        th:alt="${review.user.name}"
+                        th:src="${photo}"
+                        th:alt="${business.basicInformation.name}"
+                        class="img-responsive img-thumbnail business-photo center-block"
                     />
                 </div>
-                <div class="media-body">
-                    <p>
-                        <span th:replace="fragments/business :: stars(${review.rating})"></span>
-                        <small
-                            class="text-muted"
-                            th:text="${format.format(review.createdAt)}"
-                        >
-                        </small>
-                    </p>
-                    <p>
-                        "<th:block th:text="${review.text}"></th:block>"
-                        <a th:href="${review.url}" target="_blank" rel="noopener">
-                            <small class="text-muted">
-                                <th:block th:text="${review.user.name}"></th:block>
-                                <span class="glyphicon glyphicon-new-window"></span>
+            </div>
+            <div class="col-xs-12">
+                <h2>Reviews</h2>
+                <div class="media" th:each="review : ${reviews}">
+                    <div class="media-left">
+                        <img
+                            class="business-reviewer"
+                            th:src="${review.user.image}"
+                            th:alt="${review.user.name}"
+                        />
+                    </div>
+                    <div class="media-body">
+                        <p>
+                            <span th:replace="fragments/business :: stars(${review.rating})"></span>
+                            <small
+                                class="text-muted"
+                                th:text="${format.format(review.createdAt)}"
+                            >
                             </small>
-                        </a>
-                    </p>
+                        </p>
+                        <p>
+                            "
+                            <th:block th:text="${review.text}"></th:block>
+                            "
+                            <a th:href="${review.url}" target="_blank" rel="noopener">
+                                <small class="text-muted">
+                                    <th:block th:text="${review.user.name}"></th:block>
+                                    <span class="glyphicon glyphicon-new-window"></span>
+                                </small>
+                            </a>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -86,7 +103,10 @@
                                     Today <strong class="text-danger">Closed now</strong>
                                 </li>
                                 <li th:each="hours : ${business.details.schedule.hoursFor(today)}">
-                                    <strong th:text="${hours.start.toString() + ' - ' + hours.end.toString()}"></strong>
+                                    <strong
+                                        th:text="${hours.start.toString() + ' - ' + hours.end.toString()}"
+                                    >
+                                    </strong>
                                 </li>
                             </ul>
                         </div>
@@ -104,7 +124,10 @@
                         <div class="media-body">
                             <p>
                                 Price range
-                                <strong th:text="${business.basicInformation.pricingLevel.description}"></strong>
+                                <strong
+                                    th:text="${business.basicInformation.pricingLevel.description}"
+                                >
+                                </strong>
                             </p>
                         </div>
                     </div>
@@ -132,7 +155,10 @@
                                 <strong class="text-danger">Closed now</strong>
                             </span>
                             <p th:each="hours : ${entry.value}">
-                                <span th:text="${hours.start.toString() + ' - ' + hours.end.toString() + ' hrs.'}"></span>
+                                <span
+                                    th:text="${hours.start.toString() + ' - ' + hours.end.toString() + ' hrs.'}"
+                                >
+                                </span>
                             </p>
                         </div>
                     </div>
