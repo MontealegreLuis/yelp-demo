@@ -27,7 +27,6 @@
 .business-location,
 .business-transaction,
 .business-summary,
-.business-photos,
 .business-details {
     margin-top: 8px;
 }
@@ -51,14 +50,6 @@
 
 .hours-day {
     font-family: "Lucida Console", Monaco, monospace;
-}
-
-.transactions {
-    list-style-type: none;
-}
-
-.transactions > li {
-    margin-bottom: .5em;
 }
 
 .category {
