@@ -10,38 +10,45 @@
 <div class="container">
     <header class="row">
         <div class="col-xs-12">
-            <h1 th:text="${business.basicInformation.name}">Business</h1>
-        </div>
-        <div class="col-xs-9 business-details">
-            <h4>
-                <small class="text-primary" th:if="${business.details.isClaimed}">
-                    <span class="glyphicon glyphicon-ok-sign"></span> Claimed
-                </small>
-                <small
-                    th:replace="fragments/business :: transactions(${business.basicInformation})">
-                </small>
-            </h4>
-            <p th:replace="fragments/business :: rating(${business.basicInformation})"></p>
-            <p th:replace="fragments/business :: priceCategories(business=${business.basicInformation}, criteria=${criteria})"></p>
-        </div>
-        <div class="col-xs-3 business-summary">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <div
-                        th:replace="fragments/business :: location(${business.basicInformation})"
-                    >
+            <div class="col-xs-12">
+                <h1 th:text="${business.basicInformation.name}">Business</h1>
+            </div>
+            <div class="col-xs-7 business-details">
+                <h4>
+                    <small class="text-primary" th:if="${business.details.isClaimed}">
+                        <span class="glyphicon glyphicon-ok-sign"></span> Claimed
+                    </small>
+                    <small
+                        th:replace="fragments/business :: transactions(${business.basicInformation})">
+                    </small>
+                </h4>
+                <p th:replace="fragments/business :: rating(${business.basicInformation})"></p>
+                <p th:replace="fragments/business :: priceCategories(business=${business.basicInformation}, criteria=${criteria})"></p>
+            </div>
+            <div class="col-xs-3 business-summary">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div
+                            th:replace="fragments/business :: location(${business.basicInformation})"
+                        >
+                        </div>
+                        <div
+                            th:replace="fragments/business :: phone(${business.basicInformation})"
+                        >
+                        </div>
                     </div>
+                </div>
+            </div>
+            <div class="col-xs-2 business-map">
+                <div class="embed-responsive embed-responsive-4by3">
                     <div
-                        th:replace="fragments/business :: phone(${business.basicInformation})"
-                    >
-                    </div>
+                        id="business-map"
+                        class="embed-responsive-item"
+                    ></div>
                 </div>
             </div>
         </div>
     </header>
-    <section class="row business-header">
-
-    </section>
     <section class="row business-details">
         <div class="col-xs-9">
             <div class="col-xs-12">
@@ -168,5 +175,13 @@
     </section>
 </div>
 <th:block th:replace="fragments/common :: scripts">Scripts</th:block>
+<script src="/map-business.js"></script>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    const latitude = /*[[${business.basicInformation.coordinates.latitude}]]*/ 0;
+    const longitude = /*[[${business.basicInformation.coordinates.longitude}]]*/ 0;
+    new Map(document.getElementById('business-map'), latitude, longitude).show();
+    /*]]>*/
+</script>
 </body>
 </html>
