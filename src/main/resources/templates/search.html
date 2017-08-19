@@ -2,7 +2,14 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Search Businesses in your area!!</title>
+    <link
+        href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        rel="stylesheet"
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+        crossorigin="anonymous"
+    />
     <th:block th:replace="fragments/common :: styles">Stylesheets</th:block>
 </head>
 <body>
@@ -57,15 +64,17 @@
                         (<span th:text="${pagination.last()}">5</span> pages)
                     </th:block>
                 </div>
-                <div class="row business" th:each="business: ${result.businesses}">
+                <div
+                    th:id="${business.id}"
+                    class="row business"
+                    th:each="business: ${result.businesses}"
+                >
                     <div class="col-xs-4 col-md-2 text-center">
-                        <a th:href="${business.url}">
-                            <img
-                                class="img-responsive img-rounded business-img"
-                                th:src="${business.image}"
-                                th:alt="${business.name}"
-                            />
-                        </a>
+                        <img
+                            class="img-responsive img-rounded business-img"
+                            th:src="${business.image}"
+                            th:alt="${business.name}"
+                        />
                     </div>
                     <div class="col-xs-8 col-md-6">
                         <h4>
@@ -80,6 +89,13 @@
                         </h4>
                         <p th:replace="fragments/business :: rating(${business})"></p>
                         <p th:replace="fragments/business :: priceCategories(business=${business}, criteria=${criteria})"></p>
+                        <p>
+                            <a th:href="${business.url}" target="_blank" rel="noopener">
+                                <i class="fa fa-yelp text-danger"></i>
+                                View on Yelp
+                                <small class="glyphicon glyphicon-new-window"></small>
+                            </a>
+                        </p>
                     </div>
                     <div class="col-xs-offset-4 col-xs-8 col-md-offset-0 col-md-4 business-location">
                         <div th:replace="fragments/business :: location(${business})"></div>
