@@ -27,13 +27,13 @@
 .business-location,
 .business-transaction,
 .business-summary,
-.business-details,
 .business-map {
     margin-top: 8px;
 }
 
 #business-map {
     height: 128px;
+    width: 100%;
 }
 
 .business-hours {
@@ -42,7 +42,6 @@
 
 .business-photo {
     max-height: 200px;
-    max-width: 200px;
 }
 
 .business-reviewer {
@@ -61,4 +60,10 @@
 .category {
     float: left;
     width: auto;
+}
+
+@media screen and (max-width: 768px) {
+    .hours {
+        margin-top: 2em;
+    }
 }

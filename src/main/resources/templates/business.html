@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title th:text="${business.basicInformation.name}">Business details</title>
     <th:block th:replace="fragments/common :: styles">Stylesheets</th:block>
 </head>
@@ -10,50 +11,48 @@
 <div class="container">
     <header class="row">
         <div class="col-xs-12">
-            <div class="col-xs-12">
-                <h1>
-                    <th:block th:text="${business.basicInformation.name}">Business</th:block>
-                    <small th:if="${business.details.isClaimed}">
-                        <span class="glyphicon glyphicon-ok-sign text-primary"></span> Claimed
-                    </small>
-                    <small th:if="${business.details.schedule.isOpenNow}">
-                        <span class="glyphicon glyphicon-ok-sign text-success"></span> Open now
-                    </small>
-                    <small th:if="${!business.details.schedule.isOpenNow}">
-                        <span class="glyphicon glyphicon-ok-sign text-danger"></span> Closed now
-                    </small>
-                </h1>
-            </div>
-            <div class="col-xs-3 business-details">
-                <h2>
-                    <small
-                        th:replace="fragments/business :: transactions(${business.basicInformation})">
-                    </small>
-                </h2>
-                <p th:replace="fragments/business :: rating(${business.basicInformation})"></p>
-                <p th:replace="fragments/business :: priceCategories(business=${business.basicInformation}, criteria=${criteria})"></p>
-            </div>
-            <div class="col-xs-3 business-summary">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <div
-                            th:replace="fragments/business :: location(${business.basicInformation})"
-                        >
-                        </div>
-                        <div
-                            th:replace="fragments/business :: phone(${business.basicInformation})"
-                        >
-                        </div>
+            <h1>
+                <th:block th:text="${business.basicInformation.name}">Business</th:block>
+                <small th:if="${business.details.isClaimed}">
+                    <span class="glyphicon glyphicon-ok-sign text-primary"></span> Claimed
+                </small>
+                <small th:if="${business.details.schedule.isOpenNow}">
+                    <span class="glyphicon glyphicon-ok-sign text-success"></span> Open now
+                </small>
+                <small th:if="${!business.details.schedule.isOpenNow}">
+                    <span class="glyphicon glyphicon-ok-sign text-danger"></span> Closed now
+                </small>
+            </h1>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-3 business-details">
+            <h2>
+                <small
+                    th:replace="fragments/business :: transactions(${business.basicInformation})">
+                </small>
+            </h2>
+            <p th:replace="fragments/business :: rating(${business.basicInformation})"></p>
+            <p th:replace="fragments/business :: priceCategories(business=${business.basicInformation}, criteria=${criteria})"></p>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-3 business-summary">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div
+                        th:replace="fragments/business :: location(${business.basicInformation})"
+                    >
+                    </div>
+                    <div
+                        th:replace="fragments/business :: phone(${business.basicInformation})"
+                    >
                     </div>
                 </div>
             </div>
-            <div class="col-xs-6 business-map">
+        </div>
+        <div class="col-xs-12 col-sm-8 col-md-6 business-map">
                 <div id="business-map"></div>
             </div>
-        </div>
     </header>
     <section class="row business-details">
-        <aside class="col-xs-3">
+        <aside class="col-xs-12 col-sm-4 col-md-3">
             <div class="panel panel-default hours">
                 <div class="panel-heading">
                     <div class="media">
@@ -135,9 +134,9 @@
                 </div>
             </div>
         </aside>
-        <div class="col-xs-9">
+        <div class="col-xs-12 col-sm-8 col-md-9">
             <div class="col-xs-12">
-                <div class="col-xs-4" th:each="photo : ${business.details.photos}">
+                <div class="col-xs-12 col-sm-4" th:each="photo : ${business.details.photos}">
                     <img
                         th:src="${photo}"
                         th:alt="${business.basicInformation.name}"
