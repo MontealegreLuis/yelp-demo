@@ -48,8 +48,8 @@
             </div>
         </div>
         <div class="col-xs-12 col-sm-8 col-md-6 business-map">
-                <div id="business-map"></div>
-            </div>
+            <div id="business-map"></div>
+        </div>
     </header>
     <section class="row business-details">
         <aside class="col-xs-12 col-sm-4 col-md-3">
@@ -184,9 +184,13 @@
 <script src="/map-business.js"></script>
 <script th:inline="javascript">
     /*<![CDATA[*/
-    const latitude = /*[[${business.basicInformation.coordinates.latitude}]]*/ 0;
-    const longitude = /*[[${business.basicInformation.coordinates.longitude}]]*/ 0;
-    new Map(document.getElementById('business-map'), latitude, longitude).show();
+    (function () {
+        var center = /*[[${mapCenter}]]*/ 0;
+        center = JSON.parse(center);
+        const map = new Map(document.getElementById('business-map'), center);
+        map.changeTypeTo(google.maps.MapTypeId.HYBRID);
+        map.addMarkerAt(center.latitude, center.longitude);
+    })();
     /*]]>*/
 </script>
 </body>

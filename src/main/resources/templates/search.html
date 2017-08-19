@@ -64,6 +64,11 @@
                         (<span th:text="${pagination.last()}">5</span> pages)
                     </th:block>
                 </div>
+                <div class="row">
+                    <div class="col-xs-12 businesses-map">
+                        <div id="businesses-map"></div>
+                    </div>
+                </div>
                 <div
                     th:id="${business.id}"
                     class="row business"
@@ -90,8 +95,8 @@
                         <p th:replace="fragments/business :: rating(${business})"></p>
                         <p th:replace="fragments/business :: priceCategories(business=${business}, criteria=${criteria})"></p>
                         <p>
+                            <i class="fa fa-yelp text-danger"></i>
                             <a th:href="${business.url}" target="_blank" rel="noopener">
-                                <i class="fa fa-yelp text-danger"></i>
                                 View on Yelp
                                 <small class="glyphicon glyphicon-new-window"></small>
                             </a>
@@ -163,5 +168,16 @@
     </div>
 </main>
 <th:block th:replace="fragments/common :: scripts">Scripts</th:block>
+<script src="/map-business.js"></script>
+<script th:if="${result != null}" th:inline="javascript">
+    /*<![CDATA[*/
+    (function () {
+        const coordinates = /*[[${coordinates}]]*/ '';
+        const center = /*[[${mapCenter}]]*/ '';
+        const map = new Map(document.getElementById('businesses-map'), JSON.parse(center));
+        map.addMarkers(JSON.parse(coordinates));
+    })();
+    /*]]>*/
+</script>
 </body>
 </html>

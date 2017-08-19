@@ -18,7 +18,7 @@
     margin-top: 10px;
 }
 
-.business:nth-child(6) {
+.business:nth-child(7) {
     border-style: none;
     padding-bottom: 0;
 }
@@ -32,6 +32,11 @@
 
 #business-map {
     height: 128px;
+    width: 100%;
+}
+
+#businesses-map {
+    height: 300px;
     width: 100%;
 }
 
