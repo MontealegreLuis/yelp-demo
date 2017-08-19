@@ -32,12 +32,17 @@
     margin-top: 8px;
 }
 
+#business-map {
+    height: 128px;
+}
+
 .business-hours {
     padding-top: 2px;
 }
 
 .business-photo {
     max-height: 200px;
+    max-width: 200px;
 }
 
 .business-reviewer {

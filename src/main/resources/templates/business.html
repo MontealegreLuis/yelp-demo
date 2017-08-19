@@ -11,17 +11,25 @@
     <header class="row">
         <div class="col-xs-12">
             <div class="col-xs-12">
-                <h1 th:text="${business.basicInformation.name}">Business</h1>
-            </div>
-            <div class="col-xs-7 business-details">
-                <h4>
-                    <small class="text-primary" th:if="${business.details.isClaimed}">
-                        <span class="glyphicon glyphicon-ok-sign"></span> Claimed
+                <h1>
+                    <th:block th:text="${business.basicInformation.name}">Business</th:block>
+                    <small th:if="${business.details.isClaimed}">
+                        <span class="glyphicon glyphicon-ok-sign text-primary"></span> Claimed
                     </small>
+                    <small th:if="${business.details.schedule.isOpenNow}">
+                        <span class="glyphicon glyphicon-ok-sign text-success"></span> Open now
+                    </small>
+                    <small th:if="${!business.details.schedule.isOpenNow}">
+                        <span class="glyphicon glyphicon-ok-sign text-danger"></span> Closed now
+                    </small>
+                </h1>
+            </div>
+            <div class="col-xs-3 business-details">
+                <h2>
                     <small
                         th:replace="fragments/business :: transactions(${business.basicInformation})">
                     </small>
-                </h4>
+                </h2>
                 <p th:replace="fragments/business :: rating(${business.basicInformation})"></p>
                 <p th:replace="fragments/business :: priceCategories(business=${business.basicInformation}, criteria=${criteria})"></p>
             </div>
@@ -39,67 +47,22 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xs-2 business-map">
-                <div class="embed-responsive embed-responsive-4by3">
-                    <div
-                        id="business-map"
-                        class="embed-responsive-item"
-                    ></div>
-                </div>
+            <div class="col-xs-6 business-map">
+                <div id="business-map"></div>
             </div>
         </div>
     </header>
     <section class="row business-details">
-        <div class="col-xs-9">
-            <div class="col-xs-12">
-                <div class="col-xs-4" th:each="photo : ${business.details.photos}">
-                    <img
-                        th:src="${photo}"
-                        th:alt="${business.basicInformation.name}"
-                        class="img-responsive img-thumbnail business-photo center-block"
-                    />
-                </div>
-            </div>
-            <div class="col-xs-12">
-                <h2>Reviews</h2>
-                <div class="media" th:each="review : ${reviews}">
-                    <div class="media-left">
-                        <img
-                            class="business-reviewer"
-                            th:src="${review.user.image}"
-                            th:alt="${review.user.name}"
-                        />
-                    </div>
-                    <div class="media-body">
-                        <p>
-                            <span th:replace="fragments/business :: stars(${review.rating})"></span>
-                            <small
-                                class="text-muted"
-                                th:text="${format.format(review.createdAt)}"
-                            >
-                            </small>
-                        </p>
-                        <p>
-                            "
-                            <th:block th:text="${review.text}"></th:block>
-                            "
-                            <a th:href="${review.url}" target="_blank" rel="noopener">
-                                <small class="text-muted">
-                                    <th:block th:text="${review.user.name}"></th:block>
-                                    <span class="glyphicon glyphicon-new-window"></span>
-                                </small>
-                            </a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
         <aside class="col-xs-3">
             <div class="panel panel-default hours">
                 <div class="panel-heading">
                     <div class="media">
                         <div class="media-left text-primary">
-                            <span class="glyphicon glyphicon-time"></span>
+                            <span
+                                th:classappend="${business.details.schedule.isOpenNow ? 'text-success' : 'text-danger'}"
+                                class="glyphicon glyphicon-time"
+                            >
+                            </span>
                         </div>
                         <div class="media-body">
                             <ul class="today-business-hours">
@@ -111,7 +74,7 @@
                                 </li>
                                 <li th:each="hours : ${business.details.schedule.hoursFor(today)}">
                                     <strong
-                                        th:text="${hours.start.toString() + ' - ' + hours.end.toString()}"
+                                        th:text="${hours.start.toString() + ' - ' + hours.end.toString() + ' hrs.'}"
                                     >
                                     </strong>
                                 </li>
@@ -172,6 +135,50 @@
                 </div>
             </div>
         </aside>
+        <div class="col-xs-9">
+            <div class="col-xs-12">
+                <div class="col-xs-4" th:each="photo : ${business.details.photos}">
+                    <img
+                        th:src="${photo}"
+                        th:alt="${business.basicInformation.name}"
+                        class="img-responsive img-thumbnail business-photo center-block"
+                    />
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <h2>Reviews</h2>
+                <div class="media" th:each="review : ${reviews}">
+                    <div class="media-left">
+                        <img
+                            class="business-reviewer"
+                            th:src="${review.user.image}"
+                            th:alt="${review.user.name}"
+                        />
+                    </div>
+                    <div class="media-body">
+                        <p>
+                            <span th:replace="fragments/business :: stars(${review.rating})"></span>
+                            <small
+                                class="text-muted"
+                                th:text="${format.format(review.createdAt)}"
+                            >
+                            </small>
+                        </p>
+                        <p>
+                            "
+                            <th:block th:text="${review.text}"></th:block>
+                            "
+                            <a th:href="${review.url}" target="_blank" rel="noopener">
+                                <small class="text-muted">
+                                    <th:block th:text="${review.user.name}"></th:block>
+                                    <span class="glyphicon glyphicon-new-window"></span>
+                                </small>
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 </div>
 <th:block th:replace="fragments/common :: scripts">Scripts</th:block>
