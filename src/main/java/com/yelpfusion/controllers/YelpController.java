@@ -22,7 +22,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.NONE;
@@ -66,7 +69,20 @@ public class YelpController {
         SearchResult result = yelp.search(criteria).searchResult();
         viewModel.addAttribute("categories", categories);
         viewModel.addAttribute("result", result);
-        viewModel.addAttribute("coordinates", writer.writeValueAsString(result.coordinates()));
+        viewModel.addAttribute(
+            "businesses",
+            writer.writeValueAsString(result.businessesToMap(businesses -> businesses
+                .stream()
+                .map(business -> {
+                    Map<String, Object> businessInformation = new HashMap<>();
+                    businessInformation.put("id", business.id);
+                    businessInformation.put("name", business.name);
+                    businessInformation.put("coordinates", business.coordinates);
+                    return businessInformation;
+                })
+                .collect(Collectors.toList()))
+            )
+        );
         viewModel.addAttribute("mapCenter", writer.writeValueAsString(result.region.center));
         viewModel.addAttribute("criteria", criteria);
         viewModel.addAttribute("pagination", criteria.pagination(result.total));

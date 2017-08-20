@@ -172,10 +172,10 @@
 <script th:if="${result != null}" th:inline="javascript">
     /*<![CDATA[*/
     (function () {
-        const coordinates = /*[[${coordinates}]]*/ '';
+        const businesses = /*[[${businesses}]]*/ '';
         const center = /*[[${mapCenter}]]*/ '';
         const map = new Map(document.getElementById('businesses-map'), JSON.parse(center));
-        map.addMarkers(JSON.parse(coordinates));
+        map.addMarkers(JSON.parse(businesses));
     })();
     /*]]>*/
 </script>
