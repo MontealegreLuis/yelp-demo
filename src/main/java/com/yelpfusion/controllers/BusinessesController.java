@@ -49,6 +49,12 @@ public class BusinessesController {
         return yelp.search(SearchCriteria.byLocation(location)).originalResponse();
     }
 
+    @GetMapping(value = "/yelp/business/{yelpId}", produces = "application/json")
+    @ResponseBody
+    public String yelpBusiness(@PathVariable String yelpId) {
+        return yelp.searchById(yelpId).originalResponse();
+    }
+
     @GetMapping(value = "/businesses/{location}", produces = "application/json")
     @ResponseBody
     public String showBusinesses(@PathVariable String location) throws IOException {
@@ -61,11 +67,5 @@ public class BusinessesController {
     @ResponseBody
     public String showBusiness(@PathVariable String yelpId) throws IOException {
         return writer.writeValueAsString(yelp.searchById(yelpId).business());
-    }
-
-    @GetMapping(value = "/yelp/business/{yelpId}", produces = "application/json")
-    @ResponseBody
-    public String yelpBusiness(@PathVariable String yelpId) {
-        return yelp.searchById(yelpId).originalResponse();
     }
 }
