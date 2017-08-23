@@ -201,7 +201,11 @@
                             </h4>
                             <p>
                                 <span class="glyphicon glyphicon-map-marker"></span>
-                                <th:block th:text="${business.distance.toString()}">0</th:block>
+                                <th:block
+                                    th:text="${business.distance.toMiles().toString()}"
+                                >
+                                    0 miles
+                                </th:block>
                             </p>
                             <p th:replace="fragments/business :: rating(${business})"></p>
                         </div>

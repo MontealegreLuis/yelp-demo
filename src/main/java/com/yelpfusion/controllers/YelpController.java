@@ -63,8 +63,8 @@ public class YelpController {
 
     @GetMapping("/search")
     public String showSearchResults(
-        @ModelAttribute SearchRequest
-        request, Model viewModel
+        @ModelAttribute SearchRequest request,
+        Model viewModel
     ) throws JsonProcessingException {
         SearchCriteria criteria = request.criteria();
         SearchResult result = yelp.search(criteria).searchResult();
