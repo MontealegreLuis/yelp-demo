@@ -179,6 +179,37 @@
             </div>
         </div>
     </section>
+    <section class="row business-similar">
+        <div class="col-xs-12"><h3>You might also consider</h3></div>
+        <div class="col-xs-12 col-sm-4" th:each="business: ${similarBusinesses}">
+            <div class="panel">
+                <div class="panel-body">
+                    <div class="media">
+                        <div class="media-left">
+                            <img
+                                th:src="${business.image}"
+                                th:alt="${business.name}"
+                                class="media-object business-img"
+                            />
+                        </div>
+                        <div class="media-body">
+                            <h4 class="media-heading">
+                                <a
+                                    th:text="${business.name}"
+                                    th:href="'/business/' + ${business.id}"
+                                ></a>
+                            </h4>
+                            <p>
+                                <span class="glyphicon glyphicon-map-marker"></span>
+                                <th:block th:text="${business.distance.toString()}">0</th:block>
+                            </p>
+                            <p th:replace="fragments/business :: rating(${business})"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </div>
 <th:block th:replace="fragments/common :: scripts">Scripts</th:block>
 <script src="/map-business.js"></script>

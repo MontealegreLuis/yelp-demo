@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.montealegreluis.yelpv3.Yelp;
 import com.montealegreluis.yelpv3.businesses.Business;
 import com.montealegreluis.yelpv3.businesses.SearchResult;
+import com.montealegreluis.yelpv3.businesses.distance.Distance;
 import com.montealegreluis.yelpv3.client.Credentials;
 import com.montealegreluis.yelpv3.jsonparser.SearchCategoryParser;
 import com.montealegreluis.yelpv3.search.SearchCategories;
@@ -96,6 +97,12 @@ public class YelpController {
     ) throws JsonProcessingException {
         Business business = yelp.searchById(businessId).business();
         SearchCriteria criteria = SearchCriteria.byLocation(business.basicInformation.location.city);
+        SearchCriteria similarBusinessCriteria = SearchCriteria
+            .byCoordinates(business.basicInformation.coordinates)
+            .inCategories(business.basicInformation.categories.toCsv())
+            .withinARadiusOf(Distance.inMiles(5))
+            .limit(3)
+        ;
 
         viewModel.addAttribute("business", business);
         viewModel.addAttribute("mapCenter", writer.writeValueAsString(business.basicInformation.coordinates));
@@ -103,6 +110,10 @@ public class YelpController {
         viewModel.addAttribute("criteria", criteria);
         viewModel.addAttribute("today", LocalDate.now().getDayOfWeek());
         viewModel.addAttribute("format", new SimpleDateFormat("MM/dd/yyyy HH:mm:ss"));
+        viewModel.addAttribute(
+            "similarBusinesses",
+            yelp.search(similarBusinessCriteria).searchResult().businesses
+        );
 
         return "business";
     }
