@@ -87,6 +87,7 @@ public class YelpController {
         viewModel.addAttribute("mapCenter", writer.writeValueAsString(result.region.center));
         viewModel.addAttribute("criteria", criteria);
         viewModel.addAttribute("pagination", criteria.pagination(result.total));
+        viewModel.addAttribute("queryString", criteria.toQueryString());
         return "search";
     }
 
@@ -96,16 +97,16 @@ public class YelpController {
         Model viewModel
     ) throws JsonProcessingException {
         Business business = yelp.searchById(businessId).business();
-        SearchCriteria criteria = SearchCriteria.byLocation(business.basicInformation.location.city);
+        SearchCriteria criteria = SearchCriteria.byLocation(business.location.city);
         SearchCriteria similarBusinessCriteria = SearchCriteria
-            .byCoordinates(business.basicInformation.coordinates)
-            .inCategories(business.basicInformation.categories.toCsv())
+            .byCoordinates(business.coordinates)
+            .inCategories(business.categories.toCsv())
             .withinARadiusOf(Distance.inMiles(5))
             .limit(3)
         ;
 
         viewModel.addAttribute("business", business);
-        viewModel.addAttribute("mapCenter", writer.writeValueAsString(business.basicInformation.coordinates));
+        viewModel.addAttribute("mapCenter", writer.writeValueAsString(business.coordinates));
         viewModel.addAttribute("reviews", yelp.reviews(businessId).reviews());
         viewModel.addAttribute("criteria", criteria);
         viewModel.addAttribute("today", LocalDate.now().getDayOfWeek());

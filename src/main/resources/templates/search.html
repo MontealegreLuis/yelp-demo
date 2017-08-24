@@ -115,7 +115,7 @@
                     <ul class="pagination">
                         <li th:if="${!pagination.isFirst()}">
                             <a
-                                th:href="${criteria.queryStringForPage(pagination.first())}"
+                                th:href="${queryString.forPage(pagination.first()).toString()}"
                                 aria-label="First page"
                                 title="First page"
                             >
@@ -124,7 +124,7 @@
                         </li>
                         <li th:if="${pagination.hasPrevious()}">
                             <a
-                                th:href="${criteria.queryStringForPage(pagination.previous())}"
+                                th:href="${queryString.forPage(pagination.previous()).toString()}"
                                 aria-label="Previous page"
                                 title="Previous page"
                             >
@@ -136,7 +136,7 @@
                             th:each="i : ${#numbers.sequence(pagination.currentPage(), limit/1)}"
                         >
                             <a
-                                th:href="${criteria.queryStringForPage(i)}"
+                                th:href="${queryString.forPage(i).toString()}"
                                 th:attr="aria-label=${'Page ' + i}"
                                 th:title="${'Page ' + i}"
                             >
@@ -145,7 +145,7 @@
                         </li>
                         <li th:if="${pagination.hasNext()}">
                             <a
-                                th:href="${criteria.queryStringForPage(pagination.next())}"
+                                th:href="${queryString.forPage(pagination.next()).toString()}"
                                 aria-label="Next"
                                 title="Next"
                             >
@@ -154,7 +154,7 @@
                         </li>
                         <li th:if="${!pagination.isLast()}">
                             <a
-                                th:href="${criteria.queryStringForPage(pagination.last())}"
+                                th:href="${queryString.forPage(pagination.last()).toString()}"
                                 aria-label="Last page"
                                 title="Last page"
                             >

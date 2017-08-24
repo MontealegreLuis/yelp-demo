@@ -37,7 +37,7 @@
     </span>
     <th:block th:each="category,status: ${business.categories}">
         <a
-            th:href="${'/search' + criteria.inCategory(category.alias).queryStringForPage(1)}"
+            th:href="${'/search' + criteria.inCategory(category.alias).toQueryString().forPage(1).toString()}"
             th:text="${status.last ? category.title : category.title + ','}"
         >
             Category

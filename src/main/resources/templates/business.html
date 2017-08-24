@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title th:text="${business.basicInformation.name}">Business details</title>
+    <title th:text="${business.name}">Business details</title>
     <th:block th:replace="fragments/common :: styles">Stylesheets</th:block>
 </head>
 <body>
@@ -12,14 +12,14 @@
     <header class="row">
         <div class="col-xs-12">
             <h1>
-                <th:block th:text="${business.basicInformation.name}">Business</th:block>
-                <small th:if="${business.details.isClaimed}">
+                <th:block th:text="${business.name}">Business</th:block>
+                <small th:if="${business.isClaimed}">
                     <span class="glyphicon glyphicon-ok-sign text-primary"></span> Claimed
                 </small>
-                <small th:if="${business.details.schedule.isOpenNow}">
+                <small th:if="${business.schedule.isOpenNow}">
                     <span class="glyphicon glyphicon-ok-sign text-success"></span> Open now
                 </small>
-                <small th:if="${!business.details.schedule.isOpenNow}">
+                <small th:if="${!business.schedule.isOpenNow}">
                     <span class="glyphicon glyphicon-ok-sign text-danger"></span> Closed now
                 </small>
             </h1>
@@ -27,21 +27,21 @@
         <div class="col-xs-12 col-sm-12 col-md-3 business-details">
             <h2>
                 <small
-                    th:replace="fragments/business :: transactions(${business.basicInformation})">
+                    th:replace="fragments/business :: transactions(${business})">
                 </small>
             </h2>
-            <p th:replace="fragments/business :: rating(${business.basicInformation})"></p>
-            <p th:replace="fragments/business :: priceCategories(business=${business.basicInformation}, criteria=${criteria})"></p>
+            <p th:replace="fragments/business :: rating(${business})"></p>
+            <p th:replace="fragments/business :: priceCategories(business=${business}, criteria=${criteria})"></p>
         </div>
         <div class="col-xs-12 col-sm-4 col-md-3 business-summary">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <div
-                        th:replace="fragments/business :: location(${business.basicInformation})"
+                        th:replace="fragments/business :: location(${business})"
                     >
                     </div>
                     <div
-                        th:replace="fragments/business :: phone(${business.basicInformation})"
+                        th:replace="fragments/business :: phone(${business})"
                     >
                     </div>
                 </div>
@@ -58,20 +58,20 @@
                     <div class="media">
                         <div class="media-left text-primary">
                             <span
-                                th:classappend="${business.details.schedule.isOpenNow ? 'text-success' : 'text-danger'}"
+                                th:classappend="${business.schedule.isOpenNow ? 'text-success' : 'text-danger'}"
                                 class="glyphicon glyphicon-time"
                             >
                             </span>
                         </div>
                         <div class="media-body">
                             <ul class="today-business-hours">
-                                <li th:if="${business.details.schedule.isOpenNow}">
+                                <li th:if="${business.schedule.isOpenNow}">
                                     Today <strong class="text-success">Open now</strong>
                                 </li>
-                                <li th:if="${!business.details.schedule.isOpenNow}">
+                                <li th:if="${!business.schedule.isOpenNow}">
                                     Today <strong class="text-danger">Closed now</strong>
                                 </li>
-                                <li th:each="hours : ${business.details.schedule.hoursFor(today)}">
+                                <li th:each="hours : ${business.schedule.hoursFor(today)}">
                                     <strong
                                         th:text="${hours.start.toString() + ' - ' + hours.end.toString() + ' hrs.'}"
                                     >
@@ -84,8 +84,8 @@
                         <div class="media-left">
                             <strong
                                 class="text-success"
-                                th:title="${business.basicInformation.pricingLevel.label}"
-                                th:text="${business.basicInformation.pricingLevel.toString()}"
+                                th:title="${business.pricingLevel.label}"
+                                th:text="${business.pricingLevel.toString()}"
                             >
                                 $
                             </strong>
@@ -94,7 +94,7 @@
                             <p>
                                 Price range
                                 <strong
-                                    th:text="${business.basicInformation.pricingLevel.description}"
+                                    th:text="${business.pricingLevel.description}"
                                 >
                                 </strong>
                             </p>
@@ -103,7 +103,7 @@
                 </div>
                 <div class="panel-body">
                     <h3 class="text-primary">Hours</h3>
-                    <div class="media" th:each="entry : ${business.details.schedule.hours}">
+                    <div class="media" th:each="entry : ${business.schedule.hours}">
                         <div class="media-left">
                             <strong
                                 th:text="${entry.key.getDisplayName(T(java.time.format.TextStyle).SHORT, T(java.util.Locale).US)}"
@@ -113,13 +113,13 @@
                         <div class="media-body business-hours">
                             <span
                                 class="pull-right"
-                                th:if="${today.equals(entry.key) and business.details.schedule.isOpenNow}"
+                                th:if="${today.equals(entry.key) and business.schedule.isOpenNow}"
                             >
                                 <strong class="text-success">Open now</strong>
                             </span>
                             <span
                                 class="pull-right"
-                                th:if="${today.equals(entry.key) and !business.details.schedule.isOpenNow}"
+                                th:if="${today.equals(entry.key) and !business.schedule.isOpenNow}"
                             >
                                 <strong class="text-danger">Closed now</strong>
                             </span>
@@ -136,10 +136,10 @@
         </aside>
         <div class="col-xs-12 col-sm-8 col-md-9">
             <div class="col-xs-12">
-                <div class="col-xs-12 col-sm-4" th:each="photo : ${business.details.photos}">
+                <div class="col-xs-12 col-sm-4" th:each="photo : ${business.photos}">
                     <img
                         th:src="${photo}"
-                        th:alt="${business.basicInformation.name}"
+                        th:alt="${business.name}"
                         class="img-responsive img-thumbnail business-photo center-block"
                     />
                 </div>
