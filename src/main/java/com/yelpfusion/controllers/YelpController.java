@@ -109,6 +109,7 @@ public class YelpController {
         viewModel.addAttribute("mapCenter", writer.writeValueAsString(business.coordinates));
         viewModel.addAttribute("reviews", yelp.reviews(businessId).reviews());
         viewModel.addAttribute("criteria", criteria);
+        viewModel.addAttribute("queryString", criteria.toQueryString());
         viewModel.addAttribute("today", LocalDate.now().getDayOfWeek());
         viewModel.addAttribute("format", new SimpleDateFormat("MM/dd/yyyy HH:mm:ss"));
         viewModel.addAttribute(
