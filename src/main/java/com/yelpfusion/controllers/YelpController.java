@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.montealegreluis.yelpv3.Yelp;
 import com.montealegreluis.yelpv3.businesses.Business;
+import com.montealegreluis.yelpv3.businesses.Businesses;
 import com.montealegreluis.yelpv3.businesses.SearchResult;
 import com.montealegreluis.yelpv3.businesses.distance.Distance;
 import com.montealegreluis.yelpv3.client.Credentials;
@@ -102,8 +103,9 @@ public class YelpController {
             .byCoordinates(business.coordinates)
             .inCategories(business.categories.toCsv())
             .withinARadiusOf(Distance.inMiles(5))
-            .limit(3)
+            .limit(4)
         ;
+        Businesses similarBusinesses = yelp.search(similarBusinessCriteria).searchResult().businesses;
 
         viewModel.addAttribute("business", business);
         viewModel.addAttribute("mapCenter", writer.writeValueAsString(business.coordinates));
@@ -114,7 +116,7 @@ public class YelpController {
         viewModel.addAttribute("format", new SimpleDateFormat("MM/dd/yyyy HH:mm:ss"));
         viewModel.addAttribute(
             "similarBusinesses",
-            yelp.search(similarBusinessCriteria).searchResult().businesses
+            similarBusinesses.excluding(business).subList(0, 3)
         );
 
         return "business";
