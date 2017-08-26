@@ -15,6 +15,7 @@ import com.montealegreluis.yelpv3.client.Credentials;
 import com.montealegreluis.yelpv3.jsonparser.SearchCategoryParser;
 import com.montealegreluis.yelpv3.search.SearchCategories;
 import com.montealegreluis.yelpv3.search.SearchCriteria;
+import com.yelpfusion.services.BusinessMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -73,17 +74,7 @@ public class YelpController {
         viewModel.addAttribute("result", result);
         viewModel.addAttribute(
             "businesses",
-            writer.writeValueAsString(result.businessesToMap(businesses -> businesses
-                .stream()
-                .map(business -> {
-                    Map<String, Object> businessInformation = new HashMap<>();
-                    businessInformation.put("id", business.id);
-                    businessInformation.put("name", business.name);
-                    businessInformation.put("coordinates", business.coordinates);
-                    return businessInformation;
-                })
-                .collect(Collectors.toList())
-            ))
+            writer.writeValueAsString(result.businessesToMap(new BusinessMapper()))
         );
         viewModel.addAttribute("mapCenter", writer.writeValueAsString(result.region.center));
         viewModel.addAttribute("criteria", criteria);
