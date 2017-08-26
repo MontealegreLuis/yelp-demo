@@ -82,8 +82,8 @@ public class YelpController {
                     businessInformation.put("coordinates", business.coordinates);
                     return businessInformation;
                 })
-                .collect(Collectors.toList()))
-            )
+                .collect(Collectors.toList())
+            ))
         );
         viewModel.addAttribute("mapCenter", writer.writeValueAsString(result.region.center));
         viewModel.addAttribute("criteria", criteria);

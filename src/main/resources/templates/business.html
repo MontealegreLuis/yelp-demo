@@ -202,7 +202,7 @@
                             <p>
                                 <span class="glyphicon glyphicon-map-marker"></span>
                                 <th:block
-                                    th:text="${business.distance.toMiles().toString()}"
+                                    th:text="${business.distance.convertTo(T(com.montealegreluis.yelpv3.businesses.distance.UnitOfLength).MILES).toString()}"
                                 >
                                     0 miles
                                 </th:block>
