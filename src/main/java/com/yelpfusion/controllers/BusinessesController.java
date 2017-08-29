@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.montealegreluis.yelpv3.Yelp;
 import com.montealegreluis.yelpv3.client.Credentials;
+import com.montealegreluis.yelpv3.search.Limit;
 import com.montealegreluis.yelpv3.search.SearchCriteria;
 import com.yelpfusion.serializers.EnumSerializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -58,9 +59,10 @@ public class BusinessesController {
     @GetMapping(value = "/businesses/{location}", produces = "application/json")
     @ResponseBody
     public String showBusinesses(@PathVariable String location) throws IOException {
-        return writer.writeValueAsString(
-            yelp.search(SearchCriteria.byLocation(location).limit(5)).searchResult()
-        );
+        SearchCriteria criteria = SearchCriteria.byLocation(location);
+        criteria.limit(Limit.of(5));
+
+        return writer.writeValueAsString(yelp.search(criteria).searchResult());
     }
 
     @GetMapping(value = "/business/{yelpId}.json", produces = "application/json")

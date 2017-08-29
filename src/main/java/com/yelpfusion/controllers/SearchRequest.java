@@ -3,6 +3,8 @@
  */
 package com.yelpfusion.controllers;
 
+import com.montealegreluis.yelpv3.search.Limit;
+import com.montealegreluis.yelpv3.search.Offset;
 import com.montealegreluis.yelpv3.search.SearchCriteria;
 
 public class SearchRequest {
@@ -15,8 +17,9 @@ public class SearchRequest {
     }
 
     public SearchCriteria criteria() {
-        SearchCriteria criteria = SearchCriteria.byLocation(location).limit(PAGE_SIZE);
-        if (offset != null) criteria.offset(offset);
+        SearchCriteria criteria = SearchCriteria.byLocation(location);
+        criteria.limit(Limit.of(PAGE_SIZE));
+        if (offset != null) criteria.offset(Offset.of(offset));
         if (!"".equals(categories)) criteria.inCategories(categories);
 
         return criteria;

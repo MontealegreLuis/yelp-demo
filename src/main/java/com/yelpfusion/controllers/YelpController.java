@@ -10,9 +10,10 @@ import com.montealegreluis.yelpv3.Yelp;
 import com.montealegreluis.yelpv3.businesses.Business;
 import com.montealegreluis.yelpv3.businesses.Businesses;
 import com.montealegreluis.yelpv3.businesses.SearchResult;
-import com.montealegreluis.yelpv3.businesses.distance.Distance;
 import com.montealegreluis.yelpv3.client.Credentials;
 import com.montealegreluis.yelpv3.jsonparser.SearchCategoryParser;
+import com.montealegreluis.yelpv3.search.Limit;
+import com.montealegreluis.yelpv3.search.Radius;
 import com.montealegreluis.yelpv3.search.SearchCategories;
 import com.montealegreluis.yelpv3.search.SearchCriteria;
 import com.yelpfusion.services.BusinessMapper;
@@ -25,10 +26,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.NONE;
@@ -89,22 +87,25 @@ public class YelpController {
         Model viewModel
     ) throws JsonProcessingException {
         Business business = yelp.searchById(businessId).business();
-        SearchCriteria criteria = SearchCriteria.byLocation(business.location.city);
-        SearchCriteria similarBusinessCriteria = SearchCriteria
-            .byCoordinates(business.coordinates)
-            .inCategories(business.categories.toCsv())
-            .withinARadiusOf(Distance.inMiles(5))
-            .limit(4)
-        ;
+
+        SearchCriteria similarBusinessCriteria = SearchCriteria.byCoordinates(business.coordinates);
+        similarBusinessCriteria.inCategories(business.categories.toCsv());
+        similarBusinessCriteria.withinARadiusOf(Radius.inMiles(5));
+        similarBusinessCriteria.limit(Limit.of(4));
+
         Businesses similarBusinesses = yelp.search(similarBusinessCriteria).searchResult().businesses;
 
         viewModel.addAttribute("business", business);
         viewModel.addAttribute("mapCenter", writer.writeValueAsString(business.coordinates));
         viewModel.addAttribute("reviews", yelp.reviews(businessId).reviews());
-        viewModel.addAttribute("criteria", criteria);
-        viewModel.addAttribute("queryString", criteria.toQueryString());
+        // Show links to businesses in the same categories and city
+        viewModel.addAttribute(
+            "queryString",
+            SearchCriteria.byLocation(business.location.city).toQueryString()
+        );
         viewModel.addAttribute("today", LocalDate.now().getDayOfWeek());
         viewModel.addAttribute("format", new SimpleDateFormat("MM/dd/yyyy HH:mm:ss"));
+        // Do not suggest the same business as a similar one
         viewModel.addAttribute(
             "similarBusinesses",
             similarBusinesses.excluding(business).subList(0, 3)
