@@ -44,10 +44,7 @@ public class YelpController {
         @Value("${yelp.api.client_secret}") String yelpSecret
     ) {
         yelp = new Yelp(new Credentials(yelpId, yelpSecret));
-        categories = SearchCategoryParser.all()
-            .main()
-            .availableAt(new Locale("en", "US"))
-        ;
+        categories = SearchCategoryParser.all().parentCategories().availableAt(Locale.US);
         ObjectMapper mapper = new ObjectMapper()
             .setVisibility(ALL, NONE)
             .setVisibility(FIELD, ANY)
