@@ -112,56 +112,9 @@
                     th:with="limit=${pagination.last() - pagination.currentPage() > 4 ? pagination.currentPage() + 4 : pagination.last()}"
                     th:if="${pagination.hasPages()}"
                 >
-                    <ul class="pagination">
-                        <li th:if="${!pagination.isFirst()}">
-                            <a
-                                th:href="${queryString.forPage(pagination.first()).toString()}"
-                                aria-label="First page"
-                                title="First page"
-                            >
-                                <span>&laquo;</span>
-                            </a>
-                        </li>
-                        <li th:if="${pagination.hasPrevious()}">
-                            <a
-                                th:href="${queryString.forPage(pagination.previous()).toString()}"
-                                aria-label="Previous page"
-                                title="Previous page"
-                            >
-                                <span>&lt;</span>
-                            </a>
-                        </li>
-                        <li
-                            th:classappend="${i == pagination.currentPage()} ? 'active' : ''"
-                            th:each="i : ${#numbers.sequence(pagination.currentPage(), limit/1)}"
-                        >
-                            <a
-                                th:href="${queryString.forPage(i).toString()}"
-                                th:attr="aria-label=${'Page ' + i}"
-                                th:title="${'Page ' + i}"
-                            >
-                                <span th:text="${i}">1</span>
-                            </a>
-                        </li>
-                        <li th:if="${pagination.hasNext()}">
-                            <a
-                                th:href="${queryString.forPage(pagination.next()).toString()}"
-                                aria-label="Next"
-                                title="Next"
-                            >
-                                <span>&gt;</span>
-                            </a>
-                        </li>
-                        <li th:if="${!pagination.isLast()}">
-                            <a
-                                th:href="${queryString.forPage(pagination.last()).toString()}"
-                                aria-label="Last page"
-                                title="Last page"
-                            >
-                                <span>&raquo;</span>
-                            </a>
-                        </li>
-                    </ul>
+                    <ul
+                        th:replace="fragments/pagination :: pages(${queryString}, ${pagination}, ${limit})"
+                    ></ul>
                 </div>
             </div>
         </div>
