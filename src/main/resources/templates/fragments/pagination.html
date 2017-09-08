@@ -3,8 +3,19 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Pagination</title>
+    <!--
+      - Fragments included
+      - * pages(queryString, pagination, limit)
+      -->
 </head>
 <body>
+<!--
+  - pages(business, criteria)
+  -
+  - @param com.montealegreluis.yelpv3.search.QueryString queryString
+  - @param com.montealegreluis.yelpv3.search.Pagination pagination
+  - @param int limit
+  -->
 <ul th:fragment="pages(queryString, pagination, limit)" class="pagination">
     <li th:if="${!pagination.isFirst()}">
         <a

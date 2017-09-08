@@ -3,8 +3,22 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Business fragments</title>
+    <!--
+      - Fragments included
+      - * transactions(business)
+      - * rating(business)
+      - * stars(rating)
+      - * priceCategories(business, criteria)
+      - * location(business)
+      - * phone(business)
+      -->
 </head>
 <body>
+<!--
+  - transactions(business)
+  -
+  - @param com.montealegreluis.yelpv3.businesses.Business business
+  -->
 <small
     th:fragment="transactions(business)"
     class="text-success"
@@ -13,10 +27,21 @@
     <span class="glyphicon glyphicon-ok-circle"></span>
     <th:block th:text="${transaction.label}"></th:block>
 </small>
+
+<!--
+  - rating(business)
+  -
+  - @param com.montealegreluis.yelpv3.businesses.Business business
+  -->
 <p th:fragment="rating(business)">
     <span th:replace="fragments/business :: stars(${business.rating})"></span>
     <span th:text="${business.reviewCount}">100</span> reviews
 </p>
+<!--
+  - stars(rating)
+  -
+  - @param float rating
+  -->
 <span th:fragment="stars(rating)" class="rating" th:title="${rating + ' stars'}">
     <span class="rating" th:title="${rating + ' stars'}">
         <span
@@ -27,6 +52,13 @@
         </span>
     </span>
 </span>
+
+<!--
+  - priceCategories(business, criteria)
+  -
+  - @param com.montealegreluis.yelpv3.businesses.Business business
+  - @param com.montealegreluis.yelpv3.search.SearchCriteria criteria
+  -->
 <p th:fragment="priceCategories(business, criteria)">
     <span
         class="label label-success"
@@ -44,6 +76,12 @@
         </a>
     </th:block>
 </p>
+
+<!--
+  - location(business)
+  -
+  - @param com.montealegreluis.yelpv3.businesses.Business business
+  -->
 <div th:fragment="location(business)" class="media business-location">
     <div class="media-left text-muted">
         <span class="glyphicon glyphicon-map-marker"></span>
@@ -55,6 +93,12 @@
         </th:block>
     </div>
 </div>
+
+<!--
+  - phone(business)
+  -
+  - @param com.montealegreluis.yelpv3.businesses.Business business
+  -->
 <div th:fragment="phone(business)" class="media">
     <div class="media-left text-muted">
         <span class="glyphicon glyphicon-earphone"></span>

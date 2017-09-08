@@ -3,8 +3,15 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Search fragments</title>
+    <!--
+      - Fragments included
+      - * searchForm(categories)
+      -->
 </head>
 <body>
+<!--
+ - @param com.montealegreluis.yelpv3.businesses.Categories categories
+ -->
 <form th:fragment="searchForm(categories)" action="/search" class="text-center">
     <select class="form-control category input-lg" name="categories">
         <option
