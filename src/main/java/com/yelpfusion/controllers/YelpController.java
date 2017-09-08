@@ -55,7 +55,7 @@ public class YelpController {
     @GetMapping("/")
     public String showSearchForm(Model viewModel) {
         viewModel.addAttribute("categories", categories);
-        return "search";
+        return "index";
     }
 
     @GetMapping("/search")
@@ -92,6 +92,7 @@ public class YelpController {
 
         Businesses similarBusinesses = yelp.search(similarBusinessCriteria).searchResult().businesses;
 
+        viewModel.addAttribute("categories", categories);
         viewModel.addAttribute("business", business);
         viewModel.addAttribute("mapCenter", writer.writeValueAsString(business.coordinates));
         viewModel.addAttribute("reviews", yelp.reviews(businessId).reviews());

@@ -12,28 +12,24 @@
 <!--
  - @param com.montealegreluis.yelpv3.businesses.Categories categories
  -->
-<form th:fragment="searchForm(categories)" action="/search" class="text-center">
-    <select class="form-control category input-lg" name="categories">
+<form th:fragment="searchForm(categories)">
+    <select class="form-control category" name="categories">
         <option
+            th:each="category: ${categories}"
             th:value="${category.alias}"
             th:text="${category.title}"
             th:selected="${category.alias == 'restaurants'}"
-            th:each="category: ${categories}"
         >
             Category
         </option>
     </select>
-    <div class="input-group input-group-lg">
-        <input
-            class="form-control"
-            placeholder="Near you..."
-            name="location"
-        />
+    <div class="input-group">
+        <input class="form-control" placeholder="Near you..." name="location"/>
         <span class="input-group-btn">
-                            <button class="btn btn-primary">
-                                <span class="glyphicon glyphicon-search"></span>
-                            </button>
-                        </span>
+            <button class="btn btn-primary">
+                <span class="glyphicon glyphicon-search"></span>
+            </button>
+        </span>
     </div>
 </form>
 </body>

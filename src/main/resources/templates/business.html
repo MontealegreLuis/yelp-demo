@@ -7,7 +7,7 @@
     <th:block th:replace="fragments/common :: styles">Stylesheets</th:block>
 </head>
 <body>
-<nav th:replace="fragments/common :: mainNavigation">Main navigation</nav>
+<nav th:replace="fragments/common :: mainNavigation(${categories})"></nav>
 <div class="container">
     <header class="row">
         <div class="col-xs-12">

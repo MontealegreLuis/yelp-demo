@@ -1,3 +1,19 @@
+.home {
+    background-image: url(background.png);
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+}
+
+.search-home {
+    height: 70vh;
+}
+
+.search-home form {
+    position: relative;
+    top: 50%;
+}
+
 .rating {
     color: #ffa500;
 }

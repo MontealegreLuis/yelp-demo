@@ -13,12 +13,25 @@
     <th:block th:replace="fragments/common :: styles">Stylesheets</th:block>
 </head>
 <body>
-<nav th:replace="fragments/common :: mainNavigation">Main navigation</nav>
+<nav th:replace="fragments/common :: mainNavigation(${categories})"></nav>
 <header class="jumbotron">
     <div class="container">
         <div class="row">
             <div class="col-xs-12">
-                <form th:replace="fragments/search :: searchForm(${categories})"></form>
+                <h3 th:text="${'Browsing San Antonio, TX Businesses'}"></h3>
+                <form action="/search">
+                    <div class="btn-group" data-toggle="buttons">
+                        <label class="btn btn-primary active">
+                            <input type="radio" name="pricing" autocomplete="off"/> $
+                        </label>
+                        <label class="btn btn-primary">
+                            <input type="radio" name="pricing" autocomplete="off"/> $$
+                        </label>
+                        <label class="btn btn-primary">
+                            <input type="radio" name="pricing" autocomplete="off"/> $$$
+                        </label>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
