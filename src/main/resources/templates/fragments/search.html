@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Search fragments</title>
+</head>
+<body>
+<form th:fragment="searchForm(categories)" action="/search" class="text-center">
+    <select class="form-control category input-lg" name="categories">
+        <option
+            th:value="${category.alias}"
+            th:text="${category.title}"
+            th:selected="${category.alias == 'restaurants'}"
+            th:each="category: ${categories}"
+        >
+            Category
+        </option>
+    </select>
+    <div class="input-group input-group-lg">
+        <input
+            class="form-control"
+            placeholder="Near you..."
+            name="location"
+        />
+        <span class="input-group-btn">
+                            <button class="btn btn-primary">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                        </span>
+    </div>
+</form>
+</body>
+</html>
