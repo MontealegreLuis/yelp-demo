@@ -14,35 +14,39 @@
 </head>
 <body>
 <nav th:replace="fragments/common :: main_nav">Main navigation</nav>
-<main class="container">
-    <div class="row">
-        <div class="col-xs-12">
-            <form action="/search" class="text-center">
-                <select class="form-control category input-lg" name="categories">
-                    <option
-                        th:value="${category.alias}"
-                        th:text="${category.title}"
-                        th:selected="${category.alias == 'restaurants'}"
-                        th:each="category: ${categories}"
-                    >
-                        Category
-                    </option>
-                </select>
-                <div class="input-group input-group-lg">
-                    <input
-                        class="form-control"
-                        placeholder="Near you..."
-                        name="location"
-                    />
-                    <span class="input-group-btn">
-                        <button class="btn btn-primary">
-                            <span class="glyphicon glyphicon-search"></span>
-                        </button>
-                    </span>
-                </div>
-            </form>
+<header class="jumbotron">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <form action="/search" class="text-center">
+                    <select class="form-control category input-lg" name="categories">
+                        <option
+                            th:value="${category.alias}"
+                            th:text="${category.title}"
+                            th:selected="${category.alias == 'restaurants'}"
+                            th:each="category: ${categories}"
+                        >
+                            Category
+                        </option>
+                    </select>
+                    <div class="input-group input-group-lg">
+                        <input
+                            class="form-control"
+                            placeholder="Near you..."
+                            name="location"
+                        />
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                        </span>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
+</header>
+<main class="container">
     <div th:if="${result != null}" class="row search-result">
         <div class="col-xs-12">
             <div class="panel panel-primary">
