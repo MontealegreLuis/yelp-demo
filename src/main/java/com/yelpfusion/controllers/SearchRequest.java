@@ -6,6 +6,7 @@ package com.yelpfusion.controllers;
 import com.montealegreluis.yelpv3.businesses.PricingLevel;
 import com.montealegreluis.yelpv3.search.Limit;
 import com.montealegreluis.yelpv3.search.Offset;
+import com.montealegreluis.yelpv3.search.Radius;
 import com.montealegreluis.yelpv3.search.SearchCriteria;
 
 public class SearchRequest {
@@ -17,6 +18,7 @@ public class SearchRequest {
     private Double latitude;
     private Double longitude;
     private String openNow;
+    private Integer distance;
 
     public SearchRequest() {
     }
@@ -30,6 +32,7 @@ public class SearchRequest {
         if (!"".equals(categories)) criteria.inCategories(categories);
         if (pricing != null) criteria.withPricing(PricingLevel.fromSymbol(pricing));
         if (openNow != null) criteria.openNow();
+        if (distance != null) criteria.withinARadiusOf(Radius.inMiles(distance));
 
         return criteria;
     }
@@ -88,5 +91,13 @@ public class SearchRequest {
 
     public String getOpenNow(String openNow) {
         return openNow;
+    }
+
+    public Integer getDistance() {
+        return distance;
+    }
+
+    public void setDistance(Integer distance) {
+        this.distance = distance;
     }
 }

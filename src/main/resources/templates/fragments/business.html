@@ -91,6 +91,11 @@
             <th:block th:text="${line}">line</th:block>
             <th:block th:if="${!status.last}"><br/></th:block>
         </th:block>
+        <br/>
+        <strong
+            th:if="${business.distance != null}"
+            th:text="${business.distance.convertTo(T(com.montealegreluis.yelpv3.businesses.distance.UnitOfLength).MILES).toString()}"
+        ></strong>
     </div>
 </div>
 
