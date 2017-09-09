@@ -16,6 +16,7 @@ public class SearchRequest {
     private String pricing;
     private Double latitude;
     private Double longitude;
+    private String openNow;
 
     public SearchRequest() {
     }
@@ -28,6 +29,7 @@ public class SearchRequest {
         if (offset != null) criteria.offset(Offset.of(offset));
         if (!"".equals(categories)) criteria.inCategories(categories);
         if (pricing != null) criteria.withPricing(PricingLevel.fromSymbol(pricing));
+        if (openNow != null) criteria.openNow();
 
         return criteria;
     }
@@ -78,5 +80,13 @@ public class SearchRequest {
 
     public void setLongitude(Double longitude) {
         this.longitude = longitude;
+    }
+
+    public void setOpenNow(String openNow) {
+        this.openNow = openNow;
+    }
+
+    public String getOpenNow(String openNow) {
+        return openNow;
     }
 }
