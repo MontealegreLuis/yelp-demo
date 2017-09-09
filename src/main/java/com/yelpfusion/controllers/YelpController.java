@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.montealegreluis.yelpv3.Yelp;
 import com.montealegreluis.yelpv3.businesses.Business;
 import com.montealegreluis.yelpv3.businesses.Businesses;
+import com.montealegreluis.yelpv3.businesses.PricingLevel;
 import com.montealegreluis.yelpv3.businesses.SearchResult;
 import com.montealegreluis.yelpv3.client.Credentials;
 import com.montealegreluis.yelpv3.jsonparser.SearchCategoryParser;
@@ -67,6 +68,7 @@ public class YelpController {
         SearchResult result = yelp.search(criteria).searchResult();
         viewModel.addAttribute("categories", categories);
         viewModel.addAttribute("result", result);
+        viewModel.addAttribute("pricingLevels", PricingLevel.values());
         viewModel.addAttribute(
             "businesses",
             writer.writeValueAsString(result.businessesToMap(new BusinessMapper()))

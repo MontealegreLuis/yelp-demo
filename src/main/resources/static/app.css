@@ -1,8 +1,13 @@
+.navbar {
+    margin-bottom: 0;
+}
+
 .home {
     background-image: url(background.png);
     background-size: cover;
     background-position: center;
     height: 100vh;
+    margin-bottom: 0;
 }
 
 .search-home {

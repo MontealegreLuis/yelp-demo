@@ -21,14 +21,21 @@
                 <h3 th:text="${'Browsing San Antonio, TX Businesses'}"></h3>
                 <form action="/search">
                     <div class="btn-group" data-toggle="buttons">
-                        <label class="btn btn-primary active">
-                            <input type="radio" name="pricing" autocomplete="off"/> $
-                        </label>
-                        <label class="btn btn-primary">
-                            <input type="radio" name="pricing" autocomplete="off"/> $$
-                        </label>
-                        <label class="btn btn-primary">
-                            <input type="radio" name="pricing" autocomplete="off"/> $$$
+                        <label
+                            class="btn btn-primary"
+                            th:if="${!pricing.equals(T(com.montealegreluis.yelpv3.businesses.PricingLevel).NONE)}"
+                            th:each="pricing : ${pricingLevels}"
+                        >
+                            <input
+                                type="radio"
+                                name="pricing"
+                                autocomplete="off"
+                                th:value="${pricing.value()}"
+                            />
+                            <span
+                                th:text="${pricing.symbol}"
+                                th:title="${pricing.description}"
+                            ></span>
                         </label>
                     </div>
                 </form>
