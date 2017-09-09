@@ -18,11 +18,22 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-12">
-                <h3 th:text="${'Browsing San Antonio, TX Businesses'}"></h3>
+                <h3 th:text="${'Browsing San Antonio, TX, Businesses'}"></h3>
                 <form action="/search">
+                    <input type="hidden" name="categories" th:value="${category}"/>
+                    <input
+                        type="hidden"
+                        name="latitude"
+                        th:value="${result.region.center.latitude}"
+                    />
+                    <input
+                        type="hidden"
+                        name="longitude"
+                        th:value="${result.region.center.longitude}"
+                    />
                     <div class="btn-group" data-toggle="buttons">
                         <label
-                            class="btn btn-primary"
+                            class="btn btn-success"
                             th:if="${!pricing.equals(T(com.montealegreluis.yelpv3.businesses.PricingLevel).NONE)}"
                             th:each="pricing : ${pricingLevels}"
                         >
@@ -30,7 +41,7 @@
                                 type="radio"
                                 name="pricing"
                                 autocomplete="off"
-                                th:value="${pricing.value()}"
+                                th:value="${pricing.symbol}"
                             />
                             <span
                                 th:text="${pricing.symbol}"
@@ -38,6 +49,55 @@
                             ></span>
                         </label>
                     </div>
+                    <div class="btn-group" data-toggle="buttons">
+                        <label class="btn btn-info">
+                            <input
+                                type="radio"
+                                name="open_now"
+                                autocomplete="off"
+                                value="true"
+                            />
+                            <span class="glyphicon glyphicon-time"></span>
+                            <span>Open now</span>
+                        </label>
+                    </div>
+                    <label>Distance</label>
+                    <div class="btn-group" data-toggle="buttons">
+                        <label class="btn btn-default">
+                            <input
+                                type="radio"
+                                name="distance"
+                                autocomplete="off"
+                                value="1"
+                            />
+                            <span class="glyphicon glyphicon-option-horizontal"></span>
+                            <span>Walking (1 mi.)</span>
+                        </label>
+                        <label class="btn btn-default">
+                            <input
+                                type="radio"
+                                name="distance"
+                                autocomplete="off"
+                                value="1"
+                            />
+                            <span class="glyphicon glyphicon-option-horizontal"></span>
+                            <span>Biking (2 mi.)</span>
+                        </label>
+                        <label class="btn btn-default">
+                            <input
+                                type="radio"
+                                name="distance"
+                                autocomplete="off"
+                                value="5"
+                            />
+                            <span class="glyphicon glyphicon-option-horizontal"></span>
+                            <span>Driving (5 mi.)</span>
+                        </label>
+                    </div>
+                    <button class="btn btn-primary">
+                        <span class="glyphicon glyphicon-search"></span>
+                        Refine search
+                    </button>
                 </form>
             </div>
         </div>

@@ -3,6 +3,7 @@
  */
 package com.yelpfusion.controllers;
 
+import com.montealegreluis.yelpv3.businesses.PricingLevel;
 import com.montealegreluis.yelpv3.search.Limit;
 import com.montealegreluis.yelpv3.search.Offset;
 import com.montealegreluis.yelpv3.search.SearchCriteria;
@@ -12,15 +13,21 @@ public class SearchRequest {
     private String location;
     private Integer offset;
     private String categories;
+    private String pricing;
+    private Double latitude;
+    private Double longitude;
 
     public SearchRequest() {
     }
 
     public SearchCriteria criteria() {
-        SearchCriteria criteria = SearchCriteria.byLocation(location);
+        SearchCriteria criteria;
+        if (location != null) criteria = SearchCriteria.byLocation(location);
+        else criteria = SearchCriteria.byCoordinates(latitude, longitude);
         criteria.limit(Limit.of(PAGE_SIZE));
         if (offset != null) criteria.offset(Offset.of(offset));
         if (!"".equals(categories)) criteria.inCategories(categories);
+        if (pricing != null) criteria.withPricing(PricingLevel.fromSymbol(pricing));
 
         return criteria;
     }
@@ -47,5 +54,29 @@ public class SearchRequest {
 
     public void setCategories(String categories) {
         this.categories = categories;
+    }
+
+    public String getPricing() {
+        return pricing;
+    }
+
+    public void setPricing(String pricing) {
+        this.pricing = pricing;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
     }
 }

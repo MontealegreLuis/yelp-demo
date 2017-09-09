@@ -66,6 +66,7 @@ public class YelpController {
     ) throws JsonProcessingException {
         SearchCriteria criteria = request.criteria();
         SearchResult result = yelp.search(criteria).searchResult();
+        viewModel.addAttribute("category", request.getCategories());
         viewModel.addAttribute("categories", categories);
         viewModel.addAttribute("result", result);
         viewModel.addAttribute("pricingLevels", PricingLevel.values());
