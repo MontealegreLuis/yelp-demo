@@ -61,6 +61,7 @@
                             <span>Open now</span>
                         </label>
                     </div>
+                    <br/><br/>
                     <label>Distance</label>
                     <div class="btn-group" data-toggle="buttons">
                         <label class="btn btn-default">
@@ -92,6 +93,25 @@
                             />
                             <span class="glyphicon glyphicon-option-horizontal"></span>
                             <span>Driving (5 mi.)</span>
+                        </label>
+                    </div>
+                    <br/><br/>
+                    <label>Attributes</label>
+                    <div class="btn-group" data-toggle="buttons">
+                        <label
+                            class="btn btn-default"
+                            th:each="attribute : ${attributes}"
+                        >
+                            <input
+                                type="checkbox"
+                                name="attributes"
+                                autocomplete="off"
+                                th:value="${attribute.value}"
+                            />
+                            <span
+                                th:text="${attribute.label}"
+                                th:title="${attribute.description}"
+                            ></span>
                         </label>
                     </div>
                     <button class="btn btn-primary">

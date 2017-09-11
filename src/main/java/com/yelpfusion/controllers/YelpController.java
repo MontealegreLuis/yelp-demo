@@ -13,10 +13,7 @@ import com.montealegreluis.yelpv3.businesses.PricingLevel;
 import com.montealegreluis.yelpv3.businesses.SearchResult;
 import com.montealegreluis.yelpv3.client.Credentials;
 import com.montealegreluis.yelpv3.jsonparser.SearchCategoryParser;
-import com.montealegreluis.yelpv3.search.Limit;
-import com.montealegreluis.yelpv3.search.Radius;
-import com.montealegreluis.yelpv3.search.SearchCategories;
-import com.montealegreluis.yelpv3.search.SearchCriteria;
+import com.montealegreluis.yelpv3.search.*;
 import com.yelpfusion.services.BusinessMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -70,6 +67,7 @@ public class YelpController {
         viewModel.addAttribute("categories", categories);
         viewModel.addAttribute("result", result);
         viewModel.addAttribute("pricingLevels", PricingLevel.values());
+        viewModel.addAttribute("attributes", Attribute.values());
         viewModel.addAttribute(
             "businesses",
             writer.writeValueAsString(result.businessesToMap(new BusinessMapper()))

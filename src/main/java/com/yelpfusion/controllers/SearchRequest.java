@@ -4,10 +4,10 @@
 package com.yelpfusion.controllers;
 
 import com.montealegreluis.yelpv3.businesses.PricingLevel;
-import com.montealegreluis.yelpv3.search.Limit;
-import com.montealegreluis.yelpv3.search.Offset;
-import com.montealegreluis.yelpv3.search.Radius;
-import com.montealegreluis.yelpv3.search.SearchCriteria;
+import com.montealegreluis.yelpv3.search.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class SearchRequest {
     private static final int PAGE_SIZE = 5;
@@ -19,6 +19,7 @@ public class SearchRequest {
     private Double longitude;
     private String openNow;
     private Integer distance;
+    private List<String> attributes;
 
     public SearchRequest() {
     }
@@ -33,6 +34,16 @@ public class SearchRequest {
         if (pricing != null) criteria.withPricing(PricingLevel.fromSymbol(pricing));
         if (openNow != null) criteria.openNow();
         if (distance != null) criteria.withinARadiusOf(Radius.inMiles(distance));
+
+        if (attributes != null) {
+            Attribute[] businessAttributes = attributes
+                .stream()
+                .map(attribute -> Attribute.valueOf(attribute.toUpperCase()))
+                .collect(Collectors.toList())
+                .toArray(new Attribute[attributes.size()])
+            ;
+            criteria.withAttributes(businessAttributes);
+        }
 
         return criteria;
     }
@@ -89,7 +100,7 @@ public class SearchRequest {
         this.openNow = openNow;
     }
 
-    public String getOpenNow(String openNow) {
+    public String getOpenNow() {
         return openNow;
     }
 
@@ -99,5 +110,13 @@ public class SearchRequest {
 
     public void setDistance(Integer distance) {
         this.distance = distance;
+    }
+
+    public List<String> getAttributes() {
+        return attributes;
+    }
+
+    public void setAttributes(List<String> attributes) {
+        this.attributes = attributes;
     }
 }
