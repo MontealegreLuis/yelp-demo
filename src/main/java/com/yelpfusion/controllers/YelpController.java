@@ -68,6 +68,7 @@ public class YelpController {
         viewModel.addAttribute("result", result);
         viewModel.addAttribute("pricingLevels", PricingLevel.values());
         viewModel.addAttribute("attributes", Attribute.values());
+        viewModel.addAttribute("sortingModes", SortingMode.values());
         viewModel.addAttribute(
             "businesses",
             writer.writeValueAsString(result.businessesToMap(new BusinessMapper()))

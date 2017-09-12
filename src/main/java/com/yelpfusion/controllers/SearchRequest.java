@@ -19,6 +19,7 @@ public class SearchRequest {
     private Double longitude;
     private String openNow;
     private Integer distance;
+    private String sorting;
     private List<String> attributes;
 
     public SearchRequest() {
@@ -34,7 +35,7 @@ public class SearchRequest {
         if (pricing != null) criteria.withPricing(PricingLevel.fromSymbol(pricing));
         if (openNow != null) criteria.openNow();
         if (distance != null) criteria.withinARadiusOf(Radius.inMiles(distance));
-
+        if (sorting != null) criteria.sortBy(SortingMode.valueOf(sorting.toUpperCase()));
         if (attributes != null) {
             Attribute[] businessAttributes = attributes
                 .stream()
@@ -118,5 +119,13 @@ public class SearchRequest {
 
     public void setAttributes(List<String> attributes) {
         this.attributes = attributes;
+    }
+
+    public String getSorting() {
+        return sorting;
+    }
+
+    public void setSorting(String sorting) {
+        this.sorting = sorting;
     }
 }

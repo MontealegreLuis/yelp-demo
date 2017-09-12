@@ -114,6 +114,24 @@
                             ></span>
                         </label>
                     </div>
+                    <br/><br/>
+                    <label>Sort by</label>
+                    <div class="btn-group" data-toggle="buttons">
+                        <label
+                            class="btn btn-default"
+                            th:each="sorting : ${sortingModes}"
+                        >
+                            <input
+                                type="radio"
+                                name="sorting"
+                                autocomplete="off"
+                                th:value="${sorting.toString()}"
+                            />
+                            <span
+                                th:text="${sorting.label}"
+                            ></span>
+                        </label>
+                    </div>
                     <button class="btn btn-primary">
                         <span class="glyphicon glyphicon-search"></span>
                         Refine search
