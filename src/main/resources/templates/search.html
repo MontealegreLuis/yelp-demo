@@ -10,6 +10,10 @@
         integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
         crossorigin="anonymous"
     />
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css"
+    />
     <th:block th:replace="fragments/common :: styles">Stylesheets</th:block>
 </head>
 <body>
@@ -31,35 +35,48 @@
                         name="longitude"
                         th:value="${result.region.center.longitude}"
                     />
-                    <div class="btn-group" data-toggle="buttons">
-                        <label
-                            class="btn btn-success"
-                            th:if="${!pricing.equals(T(com.montealegreluis.yelpv3.businesses.PricingLevel).NONE)}"
-                            th:each="pricing : ${pricingLevels}"
-                        >
-                            <input
-                                type="radio"
-                                name="pricing"
-                                autocomplete="off"
-                                th:value="${pricing.symbol}"
-                            />
-                            <span
-                                th:text="${pricing.symbol}"
-                                th:title="${pricing.description}"
-                            ></span>
-                        </label>
+                    <div class="pull-left">
+                        <div class="btn-group" data-toggle="buttons">
+                            <label
+                                class="btn btn-success"
+                                th:if="${!pricing.equals(T(com.montealegreluis.yelpv3.businesses.PricingLevel).NONE)}"
+                                th:each="pricing : ${pricingLevels}"
+                            >
+                                <input
+                                    type="radio"
+                                    name="pricing"
+                                    autocomplete="off"
+                                    th:value="${pricing.symbol}"
+                                />
+                                <span
+                                    th:text="${pricing.symbol}"
+                                    th:title="${pricing.description}"
+                                ></span>
+                            </label>
+                        </div>
+                        <div class="btn-group" data-toggle="buttons">
+                            <label class="btn btn-info">
+                                <input
+                                    type="radio"
+                                    name="openNow"
+                                    autocomplete="off"
+                                    value="true"
+                                />
+                                <span class="glyphicon glyphicon-time"></span>
+                                <span>Open now</span>
+                            </label>
+                        </div>
                     </div>
-                    <div class="btn-group" data-toggle="buttons">
-                        <label class="btn btn-info">
-                            <input
-                                type="radio"
-                                name="openNow"
-                                autocomplete="off"
-                                value="true"
-                            />
-                            <span class="glyphicon glyphicon-time"></span>
-                            <span>Open now</span>
-                        </label>
+                    <div class="form-inline">
+                        <div class="form-group open-at">
+                            <label for="openAt">Open at</label>
+                            <div class="input-group date" id="datetimepicker">
+                                <input id="openAt" name="openAt" class="form-control"/>
+                                <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                            </div>
+                        </div>
                     </div>
                     <br/><br/>
                     <label>Distance</label>
@@ -220,6 +237,10 @@
     </div>
 </main>
 <th:block th:replace="fragments/common :: scripts">Scripts</th:block>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"
+></script>
 <script src="/map-business.js"></script>
 <script th:if="${result != null}" th:inline="javascript">
     /*<![CDATA[*/
@@ -228,6 +249,7 @@
         const center = /*[[${mapCenter}]]*/ '';
         const map = new Map(document.getElementById('businesses-map'), JSON.parse(center));
         map.addMarkers(JSON.parse(businesses));
+        $('#datetimepicker').datetimepicker({format: "MM/DD/YYYY hh:mm:ss"});
     })();
     /*]]>*/
 </script>

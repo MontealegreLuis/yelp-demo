@@ -19,6 +19,10 @@
     top: 50%;
 }
 
+.open-at {
+    padding-left: 2em;
+}
+
 .rating {
     color: #ffa500;
 }

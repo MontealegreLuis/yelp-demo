@@ -6,6 +6,9 @@ package com.yelpfusion.controllers;
 import com.montealegreluis.yelpv3.businesses.PricingLevel;
 import com.montealegreluis.yelpv3.search.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,6 +21,7 @@ public class SearchRequest {
     private Double latitude;
     private Double longitude;
     private String openNow;
+    private String openAt;
     private Integer distance;
     private String sorting;
     private List<String> attributes;
@@ -36,17 +40,29 @@ public class SearchRequest {
         if (openNow != null) criteria.openNow();
         if (distance != null) criteria.withinARadiusOf(Radius.inMiles(distance));
         if (sorting != null) criteria.sortBy(SortingMode.valueOf(sorting.toUpperCase()));
-        if (attributes != null) {
-            Attribute[] businessAttributes = attributes
-                .stream()
-                .map(attribute -> Attribute.valueOf(attribute.toUpperCase()))
-                .collect(Collectors.toList())
-                .toArray(new Attribute[attributes.size()])
-            ;
-            criteria.withAttributes(businessAttributes);
-        }
+        if (openAt != null) addOpenAtTo(criteria);
+        if (attributes != null) addAttributesTo(criteria);
 
         return criteria;
+    }
+
+    private void addOpenAtTo(SearchCriteria criteria) {
+        try {
+            Date openAtDateTime = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss").parse(openAt);
+            criteria.openAt(openAtDateTime.toInstant().getEpochSecond());
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void addAttributesTo(SearchCriteria criteria) {
+        Attribute[] businessAttributes = attributes
+            .stream()
+            .map(attribute -> Attribute.valueOf(attribute.toUpperCase()))
+            .collect(Collectors.toList())
+            .toArray(new Attribute[attributes.size()])
+        ;
+        criteria.withAttributes(businessAttributes);
     }
 
     public String getLocation() {
@@ -127,5 +143,12 @@ public class SearchRequest {
 
     public void setSorting(String sorting) {
         this.sorting = sorting;
+    }
+    public String getOpenAt() {
+        return openAt;
+    }
+
+    public void setOpenAt(String openAt) {
+        this.openAt = openAt;
     }
 }
