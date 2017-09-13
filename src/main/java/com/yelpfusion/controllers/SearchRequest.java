@@ -48,7 +48,7 @@ public class SearchRequest {
 
     private void addOpenAtTo(SearchCriteria criteria) {
         try {
-            Date openAtDateTime = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss").parse(openAt);
+            Date openAtDateTime = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").parse(openAt);
             criteria.openAt(openAtDateTime.toInstant().getEpochSecond());
         } catch (ParseException e) {
             throw new RuntimeException(e);
